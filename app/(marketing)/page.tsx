@@ -61,22 +61,24 @@ function Proceso() {
   ]
   return (
     <section className="section-py relative" style={{ borderBottom: '1.5px solid var(--line)', overflow: 'visible' }}>
-      {/* Background image with edge fade */}
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src="/proceso-bg.jpg"
-        alt=""
-        aria-hidden="true"
-        className="absolute inset-0 w-full h-full pointer-events-none"
-        style={{
-          objectFit: 'cover',
-          objectPosition: 'center',
-          opacity: 0.18,
-          maskImage: 'radial-gradient(ellipse 85% 75% at 50% 50%, black 20%, transparent 100%)',
-          WebkitMaskImage: 'radial-gradient(ellipse 85% 75% at 50% 50%, black 20%, transparent 100%)',
-          zIndex: 0,
-        }}
-      />
+      {/* Background image — div separado con overflow:hidden para no afectar las cards */}
+      <div className="absolute inset-0 pointer-events-none" style={{ overflow: 'hidden', zIndex: 0 }}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/proceso-bg.jpg"
+          alt=""
+          aria-hidden="true"
+          style={{
+            position: 'absolute', inset: 0,
+            width: '100%', height: '100%',
+            objectFit: 'cover',
+            objectPosition: 'center',
+            opacity: 0.2,
+            maskImage: 'radial-gradient(ellipse 90% 80% at 50% 50%, black 10%, transparent 100%)',
+            WebkitMaskImage: 'radial-gradient(ellipse 90% 80% at 50% 50%, black 10%, transparent 100%)',
+          }}
+        />
+      </div>
       <RegMarks inset={22} />
       <div className="layout-container relative" style={{ zIndex: 1 }}>
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-8 items-center">

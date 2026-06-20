@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { createClient } from '@/lib/supabase/server'
 import CartBadge from '@/components/ui/CartBadge'
 import NavUserMenu from '@/components/ui/NavUserMenu'
@@ -20,13 +21,8 @@ export default async function ShopLayout({ children }: { children: React.ReactNo
         }}
       >
         <div className="layout-container flex items-center justify-between h-16">
-          <Link href="/" className="flex items-center gap-2" aria-label="Stampia — inicio">
-            <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="var(--color-brand)" strokeWidth="1.4" aria-hidden="true">
-              <circle cx="8" cy="8" r="4" /><line x1="0" y1="8" x2="16" y2="8" /><line x1="8" y1="0" x2="8" y2="16" />
-            </svg>
-            <span style={{ fontFamily: 'var(--font-archivo)', fontWeight: 800, fontSize: '1.4rem', letterSpacing: '-0.03em', color: 'var(--color-text)' }}>
-              Stampia
-            </span>
+          <Link href="/" aria-label="Stampia — inicio">
+            <Image src="/reallogo.png" alt="Stampia" width={120} height={34} style={{ height: 34, width: 'auto', objectFit: 'contain' }} priority />
           </Link>
 
           <nav className="hidden md:flex items-center gap-8">
@@ -56,11 +52,8 @@ export default async function ShopLayout({ children }: { children: React.ReactNo
         <div className="layout-container">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-[1.4fr_1fr_1fr] gap-8">
             <div>
-              <div className="flex items-center gap-2 mb-4">
-                <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="var(--cinnabar)" strokeWidth="1.4" aria-hidden="true">
-                  <circle cx="8" cy="8" r="4" /><line x1="0" y1="8" x2="16" y2="8" /><line x1="8" y1="0" x2="8" y2="16" />
-                </svg>
-                <span style={{ fontFamily: 'var(--font-archivo)', fontWeight: 800, fontSize: '1.4rem', color: '#fff' }}>Stampia</span>
+              <div className="mb-4">
+                <Image src="/reallogo.png" alt="Stampia" width={110} height={31} style={{ height: 31, width: 'auto', objectFit: 'contain', filter: 'brightness(0) invert(1)' }} />
               </div>
               <p style={{ fontSize: '0.9375rem', lineHeight: 1.6, color: 'rgba(255,255,255,0.5)', maxWidth: '20rem' }}>
                 Taller de impresión bajo demanda. Tu diseño, impreso y enviado a cualquier rincón de México.

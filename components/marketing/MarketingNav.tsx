@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { Printer, Tag, Shirt, Users, Mail, BookOpen } from 'lucide-react'
@@ -31,15 +32,15 @@ const NAV_ITEMS = [
 
 function Wordmark({ dark }: { dark: boolean }) {
   return (
-    <Link href="/" className="flex items-center gap-2" aria-label="Stampia — inicio">
-      <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="var(--cinnabar)" strokeWidth="1.4" aria-hidden="true">
-        <circle cx="8" cy="8" r="4" />
-        <line x1="0" y1="8" x2="16" y2="8" />
-        <line x1="8" y1="0" x2="8" y2="16" />
-      </svg>
-      <span className="mk-display" style={{ fontSize: '1.4rem', letterSpacing: '-0.03em', color: dark ? '#fff' : 'var(--ink)', transition: 'color .3s ease' }}>
-        Stampia
-      </span>
+    <Link href="/" aria-label="Stampia — inicio">
+      <Image
+        src="/reallogo.png"
+        alt="Stampia"
+        width={120}
+        height={34}
+        style={{ height: 34, width: 'auto', objectFit: 'contain', filter: dark ? 'brightness(0) invert(1)' : 'none', transition: 'filter .3s ease' }}
+        priority
+      />
     </Link>
   )
 }

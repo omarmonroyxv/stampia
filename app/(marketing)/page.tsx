@@ -14,6 +14,7 @@ import FaqSection from '@/components/marketing/FaqSection'
 import TestimonialsSection from '@/components/marketing/TestimonialsSection'
 import StickyCTA from '@/components/marketing/StickyCTA'
 import FinalCTA from '@/components/marketing/FinalCTA'
+import BlogPreviewSection from '@/components/marketing/BlogPreviewSection'
 import MayoreoSection from '@/components/marketing/MayoreoSection'
 import { Shirt, UploadCloud, Truck } from 'lucide-react'
 import type { ProductWithVariants } from '@/types/product'
@@ -112,6 +113,7 @@ export default async function HomePage() {
       <GuaranteeBand />
       <TestimonialsSection />
       <FaqSection />
+      <BlogPreviewSection />
       <FinalCTA />
       <StickyCTA />
     </>

@@ -38,10 +38,9 @@ export default function StickyCTA() {
             className="flex items-center gap-3 sm:gap-4 rounded-2xl"
             style={{ padding: '12px 12px 12px 20px', background: 'rgba(20,17,14,0.86)', backdropFilter: 'blur(14px)', border: '1px solid rgba(255,255,255,0.12)', boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.12), 0 24px 50px -16px rgba(20,17,14,0.5)' }}
           >
-            <span className="flex-shrink-0" style={{ color: 'var(--cinnabar)' }}>
-              <svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.4" aria-hidden="true">
-                <circle cx="8" cy="8" r="4" /><line x1="0" y1="8" x2="16" y2="8" /><line x1="8" y1="0" x2="8" y2="16" />
-              </svg>
+            <span className="flex-shrink-0">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/nuevofavi.png" alt="" width={18} height={18} aria-hidden="true" style={{ display: 'block', objectFit: 'contain' }} />
             </span>
             <div className="flex-1 min-w-0">
               <p style={{ fontFamily: 'var(--font-public)', fontWeight: 700, fontSize: '0.95rem', color: '#fff', lineHeight: 1.2 }}>¿List@ para imprimir?</p>

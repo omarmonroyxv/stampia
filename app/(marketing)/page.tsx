@@ -41,10 +41,9 @@ function SpecMarquee() {
         {row.map((t, i) => (
           <span key={i} className="mk-mono" style={{ display: 'inline-flex', alignItems: 'center', whiteSpace: 'nowrap', fontSize: '0.8125rem', letterSpacing: '0.12em', color: 'var(--smoke)' }}>
             {t}
-            <span style={{ margin: '0 26px', display: 'inline-flex', color: 'var(--cinnabar)' }} aria-hidden="true">
-              <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.4">
-                <circle cx="8" cy="8" r="4" /><line x1="0" y1="8" x2="16" y2="8" /><line x1="8" y1="0" x2="8" y2="16" />
-              </svg>
+            <span style={{ margin: '0 26px', display: 'inline-flex' }} aria-hidden="true">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/nuevofavi.png" alt="" width={11} height={11} style={{ display: 'block', objectFit: 'contain' }} />
             </span>
           </span>
         ))}

@@ -16,9 +16,8 @@ function FloatingMark({ style, delay = 0 }: { style: React.CSSProperties; delay?
       animate={{ y: [0, -16, 0], rotate: [0, 8, 0] }}
       transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut', delay }}
     >
-      <svg width="26" height="26" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1" aria-hidden="true">
-        <circle cx="8" cy="8" r="4" /><line x1="0" y1="8" x2="16" y2="8" /><line x1="8" y1="0" x2="8" y2="16" />
-      </svg>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src="/nuevofavi.png" alt="" width={26} height={26} aria-hidden="true" style={{ display: 'block', objectFit: 'contain' }} />
     </motion.span>
   )
 }

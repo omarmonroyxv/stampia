@@ -8,15 +8,10 @@ import { Printer, Tag, Shirt, Users, Mail, BookOpen } from 'lucide-react'
 import { NavBar } from '@/components/ui/tubelight-navbar'
 
 /* Brand registration mark — used as the "Inicio" icon */
-function RegMark({ size = 20, strokeWidth = 2, className }: { size?: number; strokeWidth?: number; className?: string }) {
+function RegMark({ size = 20, className }: { size?: number; strokeWidth?: number; className?: string }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={strokeWidth} strokeLinecap="round" className={className} aria-hidden="true">
-      <circle cx="12" cy="12" r="5" />
-      <line x1="12" y1="2" x2="12" y2="6" />
-      <line x1="12" y1="18" x2="12" y2="22" />
-      <line x1="2" y1="12" x2="6" y2="12" />
-      <line x1="18" y1="12" x2="22" y2="12" />
-    </svg>
+    // eslint-disable-next-line @next/next/no-img-element
+    <img src="/nuevofavi.png" alt="" width={size} height={size} className={className} aria-hidden="true" style={{ display: 'block', objectFit: 'contain' }} />
   )
 }
 

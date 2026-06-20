@@ -17,9 +17,8 @@ function CornerMarks() {
     <>
       {c.map((pos, i) => (
         <span key={i} className="absolute opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ color: 'var(--cinnabar)', ...pos }}>
-          <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.2" aria-hidden="true">
-            <circle cx="8" cy="8" r="4" /><line x1="0" y1="8" x2="16" y2="8" /><line x1="8" y1="0" x2="8" y2="16" />
-          </svg>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/nuevofavi.png" alt="" width={13} height={13} aria-hidden="true" style={{ display: 'block', objectFit: 'contain' }} />
         </span>
       ))}
     </>

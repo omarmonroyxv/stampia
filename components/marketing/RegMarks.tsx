@@ -4,19 +4,8 @@
 
 function Cross() {
   return (
-    <svg
-      width="16"
-      height="16"
-      viewBox="0 0 16 16"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1"
-      aria-hidden="true"
-    >
-      <circle cx="8" cy="8" r="4" />
-      <line x1="0" y1="8" x2="16" y2="8" />
-      <line x1="8" y1="0" x2="8" y2="16" />
-    </svg>
+    // eslint-disable-next-line @next/next/no-img-element
+    <img src="/nuevofavi.png" alt="" width={16} height={16} aria-hidden="true" style={{ display: 'block', objectFit: 'contain' }} />
   )
 }
 

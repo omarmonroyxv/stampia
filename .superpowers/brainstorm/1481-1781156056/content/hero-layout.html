@@ -1,0 +1,112 @@
+<h2>¿Cómo entra el usuario a Stampia?</h2>
+<p class="subtitle">Tres layouts de hero — Clean Canvas, serif editorial, animaciones expresivas</p>
+
+<div class="cards">
+
+  <div class="card" data-choice="split-product" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div style="background:#fafaf9;border-radius:8px;padding:16px;font-family:system-ui">
+        <!-- Nav -->
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid #ebebeb">
+          <span style="font-size:11px;font-weight:700;letter-spacing:.08em;color:#0a0a0a">STAMPIA</span>
+          <div style="display:flex;gap:10px">
+            <div style="width:30px;height:5px;border-radius:2px;background:#ebebeb"></div>
+            <div style="width:30px;height:5px;border-radius:2px;background:#ebebeb"></div>
+            <div style="width:40px;height:18px;border-radius:4px;background:#6c47ff"></div>
+          </div>
+        </div>
+        <!-- Hero split -->
+        <div style="display:flex;gap:12px;align-items:center">
+          <div style="flex:1">
+            <div style="font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#9ca3af;margin-bottom:6px">Plataforma POD · México</div>
+            <div style="font-family:Georgia,serif;font-size:20px;font-weight:700;line-height:1.1;color:#0a0a0a;font-style:italic;margin-bottom:8px">Tu diseño,<br><span style="color:#6c47ff;font-style:normal">en una playera.</span></div>
+            <div style="font-size:9px;color:#6b7280;line-height:1.5;margin-bottom:10px">Sin mínimos. Sin inventario.<br>Solo sube y vende.</div>
+            <div style="display:inline-block;background:#6c47ff;color:#fff;padding:6px 12px;border-radius:6px;font-size:9px;font-weight:700">Empezar →</div>
+          </div>
+          <div style="flex:1;display:flex;justify-content:center">
+            <!-- T-shirt mockup placeholder -->
+            <div style="width:72px;height:84px;position:relative">
+              <svg viewBox="0 0 120 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
+                <path d="M30 20 L10 50 L30 55 L30 120 L90 120 L90 55 L110 50 L90 20 L75 30 Q60 38 45 30 Z" fill="#f0ece8" stroke="#d1cdc9" stroke-width="1.5"/>
+                <rect x="45" y="55" width="30" height="25" rx="3" fill="#6c47ff" opacity=".25"/>
+                <rect x="48" y="58" width="24" height="3" rx="1" fill="#6c47ff" opacity=".6"/>
+                <rect x="48" y="64" width="18" height="3" rx="1" fill="#6c47ff" opacity=".4"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Split — texto + producto</h3>
+      <p>Lado izquierdo: headline serif grande + CTA. Lado derecho: playera flotando con parallax al scroll. El producto es inmediato y central.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="centered-reveal" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div style="background:#fafaf9;border-radius:8px;padding:16px;font-family:system-ui;text-align:center">
+        <!-- Nav -->
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid #ebebeb">
+          <span style="font-size:11px;font-weight:700;letter-spacing:.08em;color:#0a0a0a">STAMPIA</span>
+          <div style="display:flex;gap:10px">
+            <div style="width:30px;height:5px;border-radius:2px;background:#ebebeb"></div>
+            <div style="width:30px;height:5px;border-radius:2px;background:#ebebeb"></div>
+            <div style="width:40px;height:18px;border-radius:4px;background:#6c47ff"></div>
+          </div>
+        </div>
+        <!-- Centered hero -->
+        <div style="padding:10px 0">
+          <div style="font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#9ca3af;margin-bottom:8px">Plataforma POD · México</div>
+          <div style="font-family:Georgia,serif;font-size:22px;font-weight:700;line-height:1.1;color:#0a0a0a;font-style:italic;margin-bottom:10px">Diseña.<br><span style="color:#6c47ff;font-style:normal">Imprime. Vende.</span></div>
+          <div style="font-size:9px;color:#6b7280;margin-bottom:12px">Sin mínimos. Entrega a toda México.</div>
+          <div style="display:inline-block;background:#6c47ff;color:#fff;padding:7px 14px;border-radius:6px;font-size:9px;font-weight:700;margin-bottom:14px">Empieza gratis →</div>
+          <!-- Product reveal below fold indicator -->
+          <div style="border-top:1px solid #ebebeb;padding-top:10px;display:flex;justify-content:center;gap:6px">
+            <div style="width:32px;height:38px;background:#e8e4e0;border-radius:4px;display:flex;align-items:center;justify-content:center">
+              <div style="width:16px;height:18px;background:#6c47ff;opacity:.3;border-radius:2px"></div>
+            </div>
+            <div style="width:32px;height:38px;background:#e8e4e0;border-radius:4px"></div>
+            <div style="width:32px;height:38px;background:#e8e4e0;border-radius:4px"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Centrado + reveal al scroll</h3>
+      <p>Headline enorme centrado, CTA único. Al bajar, los productos aparecen con un reveal dramático (scale + fade). Apple-style — el texto manda arriba.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="fullscreen-editorial" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div style="background:#0a0a0a;border-radius:8px;padding:16px;font-family:system-ui;position:relative;overflow:hidden">
+        <!-- subtle texture -->
+        <div style="position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 20px,rgba(108,71,255,.03) 20px,rgba(108,71,255,.03) 21px);pointer-events:none"></div>
+        <!-- Nav -->
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,.08);position:relative">
+          <span style="font-size:11px;font-weight:700;letter-spacing:.08em;color:#fff">STAMPIA</span>
+          <div style="display:flex;gap:10px">
+            <div style="width:30px;height:5px;border-radius:2px;background:rgba(255,255,255,.15)"></div>
+            <div style="width:30px;height:5px;border-radius:2px;background:rgba(255,255,255,.15)"></div>
+            <div style="width:40px;height:18px;border-radius:4px;background:#6c47ff"></div>
+          </div>
+        </div>
+        <!-- Full bleed hero -->
+        <div style="position:relative;padding:8px 0">
+          <div style="font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#6c47ff;margin-bottom:8px">Plataforma POD · México</div>
+          <div style="font-family:Georgia,serif;font-size:24px;font-weight:700;line-height:1.0;color:#fff;font-style:italic;margin-bottom:4px">Diseña</div>
+          <div style="font-family:Georgia,serif;font-size:24px;font-weight:700;line-height:1.0;color:#fff;font-style:italic;margin-bottom:10px">tu playera<span style="color:#6c47ff">.</span></div>
+          <div style="width:40px;height:1px;background:#6c47ff;margin-bottom:10px"></div>
+          <div style="font-size:9px;color:rgba(255,255,255,.5);line-height:1.5;margin-bottom:12px">Sin mínimos · Entrega MX · Desde $299</div>
+          <div style="display:inline-block;border:1px solid rgba(255,255,255,.2);color:#fff;padding:6px 12px;border-radius:6px;font-size:9px;font-weight:600">Ver catálogo →</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Full bleed oscuro — excepción editorial</h3>
+      <p>Solo el hero es oscuro (dark dramatic entry). Al bajar, el resto del sitio abre a blanco limpio. Contraste máximo como portada de revista.</p>
+    </div>
+  </div>
+
+</div>

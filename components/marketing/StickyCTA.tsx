@@ -1,0 +1,61 @@
+'use client'
+
+import { useEffect, useState } from 'react'
+import Link from 'next/link'
+import { motion, AnimatePresence } from 'framer-motion'
+import { ArrowRight, X } from 'lucide-react'
+
+export default function StickyCTA() {
+  const [show, setShow] = useState(false)
+  const [dismissed, setDismissed] = useState(false)
+
+  useEffect(() => {
+    const onScroll = () => {
+      const y = window.scrollY
+      const max = document.documentElement.scrollHeight - window.innerHeight
+      // Show after the hero, hide near the very bottom (where the real CTA lives)
+      setShow(y > window.innerHeight * 0.9 && y < max - 700)
+    }
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  const visible = show && !dismissed
+
+  return (
+    <AnimatePresence>
+      {visible && (
+        <motion.div
+          initial={{ y: 90, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: 90, opacity: 0 }}
+          transition={{ type: 'spring', stiffness: 260, damping: 26 }}
+          className="fixed left-1/2 z-40 -translate-x-1/2 bottom-5 sm:bottom-20"
+          style={{ width: 'min(92vw, 560px)' }}
+        >
+          <div
+            className="flex items-center gap-3 sm:gap-4 rounded-2xl"
+            style={{ padding: '12px 12px 12px 20px', background: 'rgba(20,17,14,0.86)', backdropFilter: 'blur(14px)', border: '1px solid rgba(255,255,255,0.12)', boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.12), 0 24px 50px -16px rgba(20,17,14,0.5)' }}
+          >
+            <span className="flex-shrink-0" style={{ color: 'var(--cinnabar)' }}>
+              <svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.4" aria-hidden="true">
+                <circle cx="8" cy="8" r="4" /><line x1="0" y1="8" x2="16" y2="8" /><line x1="8" y1="0" x2="8" y2="16" />
+              </svg>
+            </span>
+            <div className="flex-1 min-w-0">
+              <p style={{ fontFamily: 'var(--font-public)', fontWeight: 700, fontSize: '0.95rem', color: '#fff', lineHeight: 1.2 }}>¿List@ para imprimir?</p>
+              <p className="hidden sm:block mk-mono" style={{ fontSize: '0.6875rem', letterSpacing: '0.05em', color: 'rgba(255,255,255,0.55)', marginTop: 2 }}>SIN PEDIDO MÍNIMO · DESDE 1 PIEZA</p>
+            </div>
+            <Link href="/catalog" className="mk-btn mk-btn-primary flex-shrink-0" style={{ padding: '11px 18px', fontSize: '0.875rem' }}>
+              Empieza<ArrowRight size={15} strokeWidth={2.5} />
+            </Link>
+            <button type="button" onClick={() => setDismissed(true)} aria-label="Cerrar" className="flex-shrink-0 cursor-pointer" style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.5)', padding: 4 }}>
+              <X size={18} />
+            </button>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  )
+}

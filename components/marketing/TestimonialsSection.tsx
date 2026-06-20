@@ -1,24 +1,29 @@
 'use client'
 
-import { useState } from 'react'
-import { Star, Quote } from 'lucide-react'
+import { useRef, useState } from 'react'
+import { motion, useAnimationFrame } from 'framer-motion'
+import { Star, CheckCircle2 } from 'lucide-react'
 import AnimateOnScroll from '@/components/ui/AnimateOnScroll'
 
 interface Testimonial {
   name: string
   role: string
-  avatar: string
+  avatarUrl: string
   rating: number
   text: string
   product: string
   verified?: boolean
 }
 
+/* Fotos realistas via DiceBear — estilo "notionists" con seed por nombre */
+const avatar = (seed: string) =>
+  `https://api.dicebear.com/9.x/notionists/svg?seed=${encodeURIComponent(seed)}&backgroundColor=b6e3f4,c0aede,d1d4f9,ffd5dc,ffdfbf`
+
 const TESTIMONIALS: Testimonial[] = [
   {
     name: 'Diego Ramírez',
     role: 'Organizador de eventos',
-    avatar: 'DR',
+    avatarUrl: avatar('Diego Ramirez'),
     rating: 5,
     text: 'Pedí 15 playeras para un evento universitario y llegaron perfectas. La impresión no se cuarteó después de varios lavados. Definitivamente regreso.',
     product: 'Playera premium · Serigrafía DTG',
@@ -27,7 +32,7 @@ const TESTIMONIALS: Testimonial[] = [
   {
     name: 'Fernanda López',
     role: 'Emprendedora — Tienda online',
-    avatar: 'FL',
+    avatarUrl: avatar('Fernanda Lopez'),
     rating: 5,
     text: 'Como dueña de una pequeña marca, necesitaba calidad desde la primera pieza. Stampia cumplió — los colores son exactos al diseño y el envío llegó en 6 días.',
     product: 'Tote bag · Impresión completa',
@@ -36,7 +41,7 @@ const TESTIMONIALS: Testimonial[] = [
   {
     name: 'Carlos Mendoza',
     role: 'Director creativo',
-    avatar: 'CM',
+    avatarUrl: avatar('Carlos Mendoza'),
     rating: 5,
     text: 'Llevaba tiempo buscando un proveedor confiable en México. El editor online es intuitivo, el mockup es real — no hubo sorpresas al recibir el pedido.',
     product: 'Sudadera · DTG premium',
@@ -45,7 +50,7 @@ const TESTIMONIALS: Testimonial[] = [
   {
     name: 'Valeria Torres',
     role: 'Diseñadora gráfica',
-    avatar: 'VT',
+    avatarUrl: avatar('Valeria Torres'),
     rating: 5,
     text: 'Subí un archivo con fondo transparente y el resultado fue impecable. El soporte por WhatsApp me resolvió una duda en minutos. 100% recomendado.',
     product: 'Playera oversize · Diseño personalizado',
@@ -54,7 +59,7 @@ const TESTIMONIALS: Testimonial[] = [
   {
     name: 'Luis Herrera',
     role: 'Equipo de fútbol amateur',
-    avatar: 'LH',
+    avatarUrl: avatar('Luis Herrera'),
     rating: 5,
     text: 'Encargamos jerseys para todo el equipo. La calidad de tela y la impresión superaron nuestras expectativas. Vamos a pedir el kit completo la próxima temporada.',
     product: 'Playera deportiva · Lote de 20 piezas',
@@ -63,10 +68,28 @@ const TESTIMONIALS: Testimonial[] = [
   {
     name: 'Sofía Castillo',
     role: 'Mamá creativa',
-    avatar: 'SC',
+    avatarUrl: avatar('Sofia Castillo'),
     rating: 5,
     text: 'Hice una playera con el dibujo de mi hija para su cumpleaños. Quedó exactamente como en la pantalla. Fue el regalo más especial de la fiesta.',
     product: 'Playera infantil · Diseño personalizado',
+    verified: true,
+  },
+  {
+    name: 'Rodrigo Vega',
+    role: 'Fundador de marca streetwear',
+    avatarUrl: avatar('Rodrigo Vega'),
+    rating: 5,
+    text: 'Lanzamos nuestra primera colección con Stampia. El resultado es tan profesional que la gente no cree que es impresión DTG. Ya vamos en el tercer drop.',
+    product: 'Playera premium · Drop de 50 piezas',
+    verified: true,
+  },
+  {
+    name: 'Mariana Soto',
+    role: 'Coordinadora de RH',
+    avatarUrl: avatar('Mariana Soto'),
+    rating: 5,
+    text: 'Hicimos playeras para el día de la empresa. Todos quedaron felices con la calidad y llegaron antes de lo esperado. Muy buen servicio al cliente.',
+    product: 'Playera corporativa · 30 piezas',
     verified: true,
   },
 ]
@@ -75,176 +98,161 @@ function Stars({ n }: { n: number }) {
   return (
     <div className="flex items-center gap-0.5">
       {Array.from({ length: 5 }).map((_, i) => (
-        <Star key={i} size={13} fill={i < n ? '#F59E0B' : 'none'} stroke={i < n ? '#F59E0B' : '#D1D5DB'} />
+        <Star key={i} size={12} fill={i < n ? '#F59E0B' : 'none'} stroke={i < n ? '#F59E0B' : '#D1D5DB'} />
       ))}
     </div>
   )
 }
 
-function AvatarCircle({ initials, index }: { initials: string; index: number }) {
-  const colors = [
-    'rgba(236,58,18,0.15)',
-    'rgba(59,130,246,0.15)',
-    'rgba(16,185,129,0.15)',
-    'rgba(139,92,246,0.15)',
-    'rgba(245,158,11,0.15)',
-    'rgba(236,58,18,0.12)',
-  ]
-  const textColors = ['#EC3A12', '#3B82F6', '#10B981', '#8B5CF6', '#D97706', '#EC3A12']
+function TestimonialCard({ t }: { t: Testimonial }) {
   return (
     <div
-      className="flex items-center justify-center rounded-full font-bold flex-shrink-0"
+      className="flex flex-col gap-4 rounded-2xl p-6 select-none"
       style={{
-        width: 44,
-        height: 44,
-        background: colors[index % colors.length],
-        color: textColors[index % textColors.length],
-        fontSize: '0.875rem',
-        letterSpacing: '0.04em',
-      }}
-    >
-      {initials}
-    </div>
-  )
-}
-
-function TestimonialCard({ t, index }: { t: Testimonial; index: number }) {
-  return (
-    <div
-      className="flex flex-col gap-4 rounded-2xl p-6 h-full"
-      style={{
+        width: 320,
+        flexShrink: 0,
         background: 'var(--paper)',
         border: '1.5px solid var(--line)',
-        boxShadow: '0 4px 24px rgba(20,17,14,0.06)',
+        boxShadow: '0 2px 20px rgba(20,17,14,0.06)',
       }}
     >
-      {/* Header */}
-      <div className="flex items-start justify-between gap-3">
-        <div className="flex items-center gap-3">
-          <AvatarCircle initials={t.avatar} index={index} />
-          <div>
-            <p style={{ fontWeight: 700, fontSize: '0.9375rem', color: 'var(--ink)', lineHeight: 1.2 }}>{t.name}</p>
-            <p style={{ fontSize: '0.75rem', color: 'var(--smoke)', marginTop: 2 }}>{t.role}</p>
-          </div>
+      {/* Avatar + name */}
+      <div className="flex items-center gap-3">
+        <div
+          className="rounded-full overflow-hidden flex-shrink-0"
+          style={{ width: 52, height: 52, border: '2px solid var(--line)', background: '#f0ede8' }}
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={t.avatarUrl}
+            alt={t.name}
+            width={52}
+            height={52}
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+          />
         </div>
-        <Quote size={18} style={{ color: 'var(--cinnabar)', opacity: 0.4, flexShrink: 0, marginTop: 4 }} />
+        <div className="flex-1 min-w-0">
+          <p style={{ fontWeight: 700, fontSize: '0.9375rem', color: 'var(--ink)', lineHeight: 1.2 }}>{t.name}</p>
+          <p style={{ fontSize: '0.72rem', color: 'var(--smoke)', marginTop: 2, lineHeight: 1.3 }}>{t.role}</p>
+        </div>
+        {t.verified && (
+          <CheckCircle2 size={16} style={{ color: '#10B981', flexShrink: 0 }} />
+        )}
       </div>
 
       {/* Stars */}
       <Stars n={t.rating} />
 
       {/* Text */}
-      <p style={{ fontSize: '0.9375rem', lineHeight: 1.65, color: 'var(--smoke)', flex: 1 }}>
+      <p style={{ fontSize: '0.875rem', lineHeight: 1.65, color: 'var(--smoke)', flex: 1 }}>
         "{t.text}"
       </p>
 
-      {/* Footer */}
-      <div className="flex items-center justify-between pt-3" style={{ borderTop: '1px solid var(--line)' }}>
-        <span className="mk-mono" style={{ fontSize: '0.65rem', letterSpacing: '0.08em', color: 'var(--faint)' }}>
-          {t.product}
-        </span>
-        {t.verified && (
-          <span
-            className="inline-flex items-center gap-1 rounded-full px-2 py-0.5"
-            style={{ background: 'rgba(16,185,129,0.1)', border: '1px solid rgba(16,185,129,0.25)' }}
-          >
-            <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#10B981', display: 'inline-block' }} />
-            <span className="mk-mono" style={{ fontSize: '0.6rem', letterSpacing: '0.08em', color: '#059669' }}>VERIFICADO</span>
-          </span>
-        )}
+      {/* Product tag */}
+      <div
+        className="mk-mono rounded-lg px-3 py-2 mt-auto"
+        style={{
+          fontSize: '0.62rem',
+          letterSpacing: '0.08em',
+          color: 'var(--faint)',
+          background: 'var(--paper-2)',
+          borderTop: '1px solid var(--line)',
+        }}
+      >
+        {t.product}
+      </div>
+    </div>
+  )
+}
+
+/* Infinite auto-scroll strip */
+function MarqueeRow({ items, reverse = false }: { items: Testimonial[]; reverse?: boolean }) {
+  const trackRef = useRef<HTMLDivElement>(null)
+  const posRef = useRef(0)
+  const [paused, setPaused] = useState(false)
+  const speed = 0.5 // px per frame
+
+  useAnimationFrame(() => {
+    const el = trackRef.current
+    if (!el || paused) return
+    const dir = reverse ? 1 : -1
+    posRef.current += speed * dir
+    // reset when one full set scrolled
+    const half = el.scrollWidth / 2
+    if (posRef.current <= -half) posRef.current = 0
+    if (posRef.current >= 0 && reverse) posRef.current = -half
+    el.style.transform = `translateX(${posRef.current}px)`
+  })
+
+  const doubled = [...items, ...items]
+
+  return (
+    <div
+      className="overflow-hidden"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
+      <div
+        ref={trackRef}
+        className="flex gap-4"
+        style={{ width: 'max-content', willChange: 'transform' }}
+      >
+        {doubled.map((t, i) => (
+          <TestimonialCard key={i} t={t} />
+        ))}
       </div>
     </div>
   )
 }
 
 export default function TestimonialsSection() {
-  const [active, setActive] = useState(0)
-  const total = TESTIMONIALS.length
+  const row1 = TESTIMONIALS.slice(0, 4)
+  const row2 = TESTIMONIALS.slice(4)
 
   return (
-    <section className="section-py relative overflow-hidden" style={{ borderBottom: '1.5px solid var(--line)', background: 'var(--paper-2)' }}>
+    <section
+      className="relative overflow-hidden"
+      style={{
+        paddingTop: 96,
+        paddingBottom: 96,
+        borderBottom: '1.5px solid var(--line)',
+        background: 'var(--paper-2)',
+      }}
+    >
       <div className="layout-container">
         <AnimateOnScroll>
-          {/* Header */}
-          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-12">
+          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 mb-14">
             <div>
               <p className="mk-spec mb-4">Lo que dicen nuestros clientes</p>
-              <h2 className="mk-display" style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', color: 'var(--ink)', lineHeight: 1.1 }}>
+              <h2
+                className="mk-display"
+                style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', color: 'var(--ink)', lineHeight: 1.1 }}
+              >
                 Más de 2,400 piezas<br />
                 <span style={{ color: 'var(--cinnabar)' }}>impresas con amor.</span>
               </h2>
             </div>
-            {/* Rating summary */}
-            <div className="flex items-center gap-3 rounded-2xl px-5 py-4 flex-shrink-0" style={{ background: 'var(--paper)', border: '1.5px solid var(--line)' }}>
+            {/* Rating pill */}
+            <div
+              className="flex items-center gap-4 rounded-2xl px-6 py-4 flex-shrink-0"
+              style={{ background: 'var(--paper)', border: '1.5px solid var(--line)' }}
+            >
               <div className="text-center">
-                <p className="mk-display" style={{ fontSize: '2.25rem', color: 'var(--ink)', lineHeight: 1 }}>4.9</p>
+                <p className="mk-display" style={{ fontSize: '2.5rem', color: 'var(--ink)', lineHeight: 1 }}>4.9</p>
                 <Stars n={5} />
-                <p className="mk-mono mt-1" style={{ fontSize: '0.6rem', letterSpacing: '0.08em', color: 'var(--faint)' }}>DE 5.0 · 98% SATISFACCIÓN</p>
+                <p className="mk-mono mt-1.5" style={{ fontSize: '0.6rem', letterSpacing: '0.08em', color: 'var(--faint)' }}>
+                  DE 5.0 · 98% SATISFACCIÓN
+                </p>
               </div>
             </div>
           </div>
         </AnimateOnScroll>
+      </div>
 
-        {/* Desktop grid (3 cols) */}
-        <div className="hidden md:grid md:grid-cols-3 gap-5">
-          {TESTIMONIALS.map((t, i) => (
-            <AnimateOnScroll key={i} animation="fade-up" delay={i * 0.08}>
-              <TestimonialCard t={t} index={i} />
-            </AnimateOnScroll>
-          ))}
-        </div>
-
-        {/* Mobile carousel */}
-        <div className="md:hidden">
-          <div className="overflow-hidden rounded-2xl">
-            <TestimonialCard t={TESTIMONIALS[active]} index={active} />
-          </div>
-          {/* Dots */}
-          <div className="flex items-center justify-center gap-2 mt-5">
-            {TESTIMONIALS.map((_, i) => (
-              <button
-                key={i}
-                type="button"
-                onClick={() => setActive(i)}
-                aria-label={`Testimonio ${i + 1}`}
-                style={{
-                  width: i === active ? 24 : 8,
-                  height: 8,
-                  borderRadius: 4,
-                  background: i === active ? 'var(--cinnabar)' : 'var(--line)',
-                  border: 'none',
-                  cursor: 'pointer',
-                  padding: 0,
-                  transition: 'width 0.3s, background 0.3s',
-                }}
-              />
-            ))}
-          </div>
-          {/* Arrows */}
-          <div className="flex items-center justify-center gap-3 mt-3">
-            <button
-              type="button"
-              onClick={() => setActive((active - 1 + total) % total)}
-              className="flex items-center justify-center rounded-full"
-              style={{ width: 36, height: 36, background: 'var(--paper)', border: '1.5px solid var(--line)', cursor: 'pointer' }}
-              aria-label="Anterior"
-            >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M19 12H5M12 5l-7 7 7 7" /></svg>
-            </button>
-            <span className="mk-mono" style={{ fontSize: '0.65rem', letterSpacing: '0.1em', color: 'var(--faint)' }}>
-              {active + 1} / {total}
-            </span>
-            <button
-              type="button"
-              onClick={() => setActive((active + 1) % total)}
-              className="flex items-center justify-center rounded-full"
-              style={{ width: 36, height: 36, background: 'var(--paper)', border: '1.5px solid var(--line)', cursor: 'pointer' }}
-              aria-label="Siguiente"
-            >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
-            </button>
-          </div>
-        </div>
+      {/* Marquee rows — full bleed */}
+      <div className="flex flex-col gap-4">
+        <MarqueeRow items={row1} reverse={false} />
+        <MarqueeRow items={row2} reverse={true} />
       </div>
     </section>
   )

@@ -60,9 +60,24 @@ function Proceso() {
     { icon: <Truck size={15} strokeWidth={2.5} />, title: 'Recíbelo en casa', description: 'Lo imprimimos y enviamos rastreable a todo México en 5–7 días.', date: 'PASO 03' },
   ]
   return (
-    <section className="section-py relative overflow-hidden" style={{ borderBottom: '1.5px solid var(--line)' }}>
+    <section className="section-py relative" style={{ borderBottom: '1.5px solid var(--line)', overflow: 'visible' }}>
+      {/* Background image with edge fade */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: 'url(/proceso-bg.jpg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundAttachment: 'fixed',
+          opacity: 0.13,
+          maskImage: 'radial-gradient(ellipse 80% 70% at 50% 50%, black 30%, transparent 100%)',
+          WebkitMaskImage: 'radial-gradient(ellipse 80% 70% at 50% 50%, black 30%, transparent 100%)',
+          zIndex: 0,
+        }}
+      />
       <RegMarks inset={22} />
-      <div className="layout-container">
+      <div className="layout-container relative" style={{ zIndex: 1 }}>
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-8 items-center">
           <AnimateOnScroll>
             <p className="mk-spec mb-5">Proceso</p>
@@ -80,7 +95,8 @@ function Proceso() {
           </AnimateOnScroll>
 
           <AnimateOnScroll animation="scale-reveal">
-            <div className="flex justify-center lg:justify-end overflow-hidden" style={{ minHeight: 300 }}>
+            {/* padding extra para que las cards no se corten al transladar */}
+            <div className="flex justify-center lg:justify-end" style={{ minHeight: 340, paddingRight: 80, paddingBottom: 60 }}>
               <DisplayCards cards={cards} />
             </div>
           </AnimateOnScroll>

@@ -62,17 +62,18 @@ function Proceso() {
   return (
     <section className="section-py relative" style={{ borderBottom: '1.5px solid var(--line)', overflow: 'visible' }}>
       {/* Background image with edge fade */}
-      <div
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src="/proceso-bg.jpg"
+        alt=""
         aria-hidden="true"
-        className="absolute inset-0 pointer-events-none"
+        className="absolute inset-0 w-full h-full pointer-events-none"
         style={{
-          backgroundImage: 'url(/proceso-bg.jpg)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundAttachment: 'fixed',
-          opacity: 0.13,
-          maskImage: 'radial-gradient(ellipse 80% 70% at 50% 50%, black 30%, transparent 100%)',
-          WebkitMaskImage: 'radial-gradient(ellipse 80% 70% at 50% 50%, black 30%, transparent 100%)',
+          objectFit: 'cover',
+          objectPosition: 'center',
+          opacity: 0.18,
+          maskImage: 'radial-gradient(ellipse 85% 75% at 50% 50%, black 20%, transparent 100%)',
+          WebkitMaskImage: 'radial-gradient(ellipse 85% 75% at 50% 50%, black 20%, transparent 100%)',
           zIndex: 0,
         }}
       />

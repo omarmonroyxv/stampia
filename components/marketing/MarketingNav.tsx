@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { Printer, Tag, Shirt, Users, Mail } from 'lucide-react'
+import { Printer, Tag, Shirt, Users, Mail, BookOpen } from 'lucide-react'
 import { NavBar } from '@/components/ui/tubelight-navbar'
 
 /* Brand registration mark — used as the "Inicio" icon */
@@ -25,6 +25,7 @@ const NAV_ITEMS = [
   { name: 'Precios', url: '/precios', icon: Tag },
   { name: 'Catálogo', url: '/catalog', icon: Shirt },
   { name: 'Nosotros', url: '/nosotros', icon: Users },
+  { name: 'Blog', url: '/blog', icon: BookOpen },
   { name: 'Contacto', url: '/contacto', icon: Mail },
 ]
 

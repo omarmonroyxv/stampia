@@ -43,7 +43,7 @@ export default function StickyCTA() {
               <img src="/nuevofavi.png" alt="" width={18} height={18} aria-hidden="true" style={{ display: 'block', objectFit: 'contain' }} />
             </span>
             <div className="flex-1 min-w-0">
-              <p style={{ fontFamily: 'var(--font-public)', fontWeight: 700, fontSize: '0.95rem', color: '#fff', lineHeight: 1.2 }}>¿List@ para imprimir?</p>
+              <p style={{ fontFamily: 'var(--font-public)', fontWeight: 700, fontSize: '0.95rem', color: '#fff', lineHeight: 1.2 }}>¿Listo para imprimir?</p>
               <p className="hidden sm:block mk-mono" style={{ fontSize: '0.6875rem', letterSpacing: '0.05em', color: 'rgba(255,255,255,0.55)', marginTop: 2 }}>SIN PEDIDO MÍNIMO · DESDE 1 PIEZA</p>
             </div>
             <Link href="/catalog" className="mk-btn mk-btn-primary flex-shrink-0" style={{ padding: '11px 18px', fontSize: '0.875rem' }}>

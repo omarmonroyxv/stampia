@@ -54,9 +54,8 @@ export default function GlassmorphismTrustHero({ imageSrc = '/hero.png' }: { ima
           <div className="lg:col-span-7 flex flex-col gap-6 lg:pt-6">
             <div className="mk-fade" style={{ animationDelay: '.1s' }}>
               <span className="inline-flex items-center gap-2 rounded-full px-3 py-1.5" style={{ border: '1.5px solid rgba(255,255,255,0.14)', background: 'rgba(255,255,255,0.05)', backdropFilter: 'blur(8px)' }}>
-                <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="var(--cinnabar)" strokeWidth="1.4" aria-hidden="true">
-                  <circle cx="8" cy="8" r="4" /><line x1="0" y1="8" x2="16" y2="8" /><line x1="8" y1="0" x2="8" y2="16" />
-                </svg>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/nuevofavi.png" alt="" width={13} height={13} aria-hidden="true" style={{ display: 'block', objectFit: 'contain' }} />
                 <span className="mk-mono" style={{ fontSize: '0.6875rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.85)' }}>
                   Taller de impresión · México
                 </span>

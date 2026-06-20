@@ -73,9 +73,9 @@ function Proceso() {
             width: '100%', height: '100%',
             objectFit: 'cover',
             objectPosition: 'center',
-            opacity: 0.2,
-            maskImage: 'radial-gradient(ellipse 90% 80% at 50% 50%, black 10%, transparent 100%)',
-            WebkitMaskImage: 'radial-gradient(ellipse 90% 80% at 50% 50%, black 10%, transparent 100%)',
+            opacity: 0.55,
+            maskImage: 'linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%)',
+            WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%)',
           }}
         />
       </div>

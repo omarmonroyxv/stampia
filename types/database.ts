@@ -77,6 +77,7 @@ export type Database = {
           shipping_zip: string | null
           shipping_country: string
           created_at: string
+          production_stage: string | null
         }
         Insert: {
           id?: string
@@ -94,6 +95,7 @@ export type Database = {
           shipping_zip?: string | null
           shipping_country: string
           created_at?: string
+          production_stage?: string | null
         }
         Update: {
           id?: string
@@ -111,6 +113,7 @@ export type Database = {
           shipping_zip?: string | null
           shipping_country?: string
           created_at?: string
+          production_stage?: string | null
         }
         Relationships: [
           {

@@ -124,7 +124,6 @@ export default async function HomePage() {
       <SpecMarquee />
       <BeforeAfter />
       <Proceso />
-      <Proceso3Pasos />
       <LandingAccordionItem />
       <ProductShowcase products={(products ?? []) as ProductWithVariants[]} />
       <BeneficiosSection />

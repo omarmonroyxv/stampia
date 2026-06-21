@@ -69,8 +69,8 @@ export default function MarketingNav({ user }: { user?: any }) {
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-40" style={{ background: 'transparent' }}>
-        <div className="layout-container flex items-center justify-between" style={{ height: 68 }}>
+      <header className="fixed top-0 left-0 right-0 z-40 pointer-events-none" style={{ background: 'transparent' }}>
+        <div className="layout-container flex items-center justify-between pointer-events-auto" style={{ height: 68 }}>
           <Wordmark dark={dark} />
 
           <div className="flex items-center gap-3">

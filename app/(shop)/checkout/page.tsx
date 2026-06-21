@@ -7,7 +7,7 @@ import { useCartStore } from '@/lib/store/cart'
 import { createOrder } from '@/lib/orders/actions'
 import MockupPlayera from '@/components/ui/MockupPlayera'
 import type { ClipPaymentMethod } from '@/lib/clip'
-import { SHIPPING_MXN } from '@/lib/constants'
+import type { ClipPaymentMethod } from '@/lib/clip'
 
 const MX_STATES = [
   'Aguascalientes','Baja California','Baja California Sur','Campeche','Chiapas','Chihuahua',
@@ -128,8 +128,26 @@ export default function CheckoutPage() {
   const [paymentMethod, setPaymentMethod] = useState<ClipPaymentMethod>('card')
   const [pendingResult, setPendingResult] = useState<PendingResult | null>(null)
 
+  const [zipCode, setZipCode] = useState('')
+  const [shippingCost, setShippingCost] = useState<number | null>(null)
+
+  // Simulador de cotizador (Skydropx / Envia.com mock)
+  const isCalculating = zipCode.length > 0 && zipCode.length < 5
+  
+  // Calculate dynamic shipping when zip code is 5 digits
+  if (zipCode.length === 5 && shippingCost === null) {
+    // Si el carrito supera $999, envío gratis. De lo contrario, $120 estándar, o $150 zonas remotas.
+    const sub = items.reduce((s, i) => s + i.unitPriceMxn * i.quantity, 0)
+    if (sub >= 999) setShippingCost(0)
+    else if (zipCode.startsWith('9')) setShippingCost(150) // Zonas extendidas sureste
+    else setShippingCost(120)
+  } else if (zipCode.length !== 5 && shippingCost !== null) {
+    setShippingCost(null)
+  }
+
   const subtotal = items.reduce((s, i) => s + i.unitPriceMxn * i.quantity, 0)
-  const total = subtotal + SHIPPING_MXN
+  const finalShipping = shippingCost ?? 120 // Fallback visual
+  const total = subtotal + finalShipping
 
   if (items.length === 0 && !pendingResult) { router.replace('/cart'); return null }
 
@@ -149,7 +167,7 @@ export default function CheckoutPage() {
       zip: fd.get('zip') as string,
       country: 'MX',
     }
-    const result = await createOrder(items, shipping, paymentMethod)
+    const result = await createOrder(items, shipping, paymentMethod, finalShipping)
     if ('error' in result) { setError(result.error); setLoading(false); return }
     clear()
     if (paymentMethod === 'card' && result.checkoutUrl) { window.location.href = result.checkoutUrl; return }
@@ -216,7 +234,7 @@ export default function CheckoutPage() {
                   <input name="city" required autoComplete="address-level2" placeholder="Ciudad de México" className={IC} style={IS} />
                 </Field>
                 <Field label="C.P.">
-                  <input name="zip" required autoComplete="postal-code" placeholder="06600" maxLength={5} className={IC} style={IS} />
+                  <input name="zip" required autoComplete="postal-code" placeholder="06600" maxLength={5} value={zipCode} onChange={e => setZipCode(e.target.value.replace(/\D/g, ''))} className={IC} style={IS} />
                 </Field>
               </div>
               <Field label="Estado">
@@ -289,7 +307,9 @@ export default function CheckoutPage() {
                 </div>
                 <div className="flex justify-between text-sm">
                   <span style={{ color: '#6B7280' }}>Envío</span>
-                  <span style={{ color: 'var(--ink)' }}>${SHIPPING_MXN} MXN</span>
+                  <span style={{ color: 'var(--ink)' }}>
+                    {isCalculating ? 'Calculando...' : shippingCost === 0 ? '¡Gratis!' : shippingCost !== null ? `$${shippingCost} MXN` : 'Ingresa tu C.P.'}
+                  </span>
                 </div>
                 <div className="flex justify-between font-bold" style={{ borderTop: '1.5px solid #E5E7EB', paddingTop: 12, marginTop: 4 }}>
                   <span style={{ color: 'var(--ink)' }}>Total</span>
@@ -300,9 +320,11 @@ export default function CheckoutPage() {
                 <div style={{ color: 'var(--cinnabar)' }}>
                   <Truck size={24} />
                 </div>
-                <div>
-                  <p style={{ fontSize: '0.8125rem', fontWeight: 700, color: 'var(--ink)' }}>Envío a todo México</p>
-                  <p style={{ fontSize: '0.75rem', color: '#6B7280', marginTop: 2 }}>5–7 días hábiles · Rastreable</p>
+                <div className="flex-1">
+                  <p className="flex items-center justify-between" style={{ fontSize: '0.8125rem', fontWeight: 700, color: 'var(--ink)' }}>
+                    Envío a domicilio {shippingCost === 0 && <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full ml-2">Gratis</span>}
+                  </p>
+                  <p style={{ fontSize: '0.75rem', color: '#6B7280', marginTop: 2 }}>{shippingCost === null ? 'Ingresa tu C.P. para cotizar' : '5–7 días hábiles · Rastreable'}</p>
                 </div>
               </div>
               <div className="flex flex-wrap gap-2 justify-center items-center" style={{ borderTop: '1.5px solid #E5E7EB', paddingTop: 16 }}>

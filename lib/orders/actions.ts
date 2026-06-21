@@ -31,7 +31,8 @@ export type CreateOrderResult =
 export async function createOrder(
   items: CartItem[],
   shipping: ShippingInput,
-  paymentMethod: ClipPaymentMethod = 'card'
+  paymentMethod: ClipPaymentMethod = 'card',
+  shippingMxn: number = SHIPPING_MXN
 ): Promise<CreateOrderResult> {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
@@ -63,7 +64,7 @@ export async function createOrder(
     if (!price) return { error: 'Precio no encontrado' }
     subtotal += price * item.quantity
   }
-  const total = subtotal + SHIPPING_MXN
+  const total = subtotal + shippingMxn
 
   const admin = createAdminClient()
 
@@ -79,7 +80,7 @@ export async function createOrder(
       user_id: user.id,
       status: 'pending',
       total_mxn: total,
-      shipping_mxn: SHIPPING_MXN,
+      shipping_mxn: shippingMxn,
       shipping_name: shipping.name,
       shipping_phone: shipping.phone,
       shipping_street: shipping.street,

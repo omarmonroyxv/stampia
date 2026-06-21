@@ -104,24 +104,27 @@ function Proceso() {
             </div>
           </AnimateOnScroll>
         </div>
-
-        {/* Imagen proceso3pasos — full width con mismo fade */}
-        <div className="relative mt-10" style={{ overflow: 'hidden', borderRadius: 16 }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/proceso3pasos.png"
-            alt="Los tres pasos del proceso Stampia"
-            style={{
-              width: '100%',
-              height: 'auto',
-              display: 'block',
-              maskImage: 'linear-gradient(to bottom, transparent 0%, black 10%, black 85%, transparent 100%)',
-              WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 10%, black 85%, transparent 100%)',
-            }}
-          />
-        </div>
       </div>
     </section>
+  )
+}
+
+function Proceso3Pasos() {
+  return (
+    <div style={{ overflow: 'hidden', lineHeight: 0 }}>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src="/proceso3pasos.png"
+        alt="Los tres pasos del proceso Stampia"
+        style={{
+          width: '100%',
+          height: 'auto',
+          display: 'block',
+          maskImage: 'linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%)',
+          WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%)',
+        }}
+      />
+    </div>
   )
 }
 
@@ -139,6 +142,7 @@ export default async function HomePage() {
       <SpecMarquee />
       <BeforeAfter />
       <Proceso />
+      <Proceso3Pasos />
       <LandingAccordionItem />
       <ProductShowcase products={(products ?? []) as ProductWithVariants[]} />
       <BeneficiosSection />

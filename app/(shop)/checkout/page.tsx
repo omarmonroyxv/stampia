@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { Store, Landmark, Package, CreditCard, Lock, MapPin, Truck, ShoppingBag } from 'lucide-react'
 import { useCartStore } from '@/lib/store/cart'
 import { createOrder } from '@/lib/orders/actions'

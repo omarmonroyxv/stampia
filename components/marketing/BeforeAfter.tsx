@@ -79,15 +79,18 @@ export default function BeforeAfter() {
               aria-valuemax={100}
             >
               {/* AFTER — printed garment (full) */}
-              <svg viewBox="0 0 400 400" className="absolute inset-0 w-full h-full" aria-hidden="true">
-                <defs>
-                  <pattern id="baHt" width="9" height="9" patternUnits="userSpaceOnUse"><circle cx="4.5" cy="4.5" r="2" fill="#ec3a12" /></pattern>
-                </defs>
-                <path d="M150,96 C168,113 232,113 250,96 L300,128 L280,166 L266,151 L266,340 L134,340 L134,151 L120,166 L100,128 Z" fill="#ffffff" stroke="#14110e" strokeWidth="2.5" strokeLinejoin="round" />
-                <path d="M160,102 C176,116 224,116 240,102" fill="none" stroke="#14110e" strokeWidth="1.6" opacity="0.45" />
-                <Design />
-                <text x="200" y="372" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="11" fill="#9a9389" letterSpacing="2">IMPRESO · DTG</text>
-              </svg>
+              <div className="absolute inset-0 flex items-center justify-center" style={{ background: 'var(--paper-2)' }}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/GIRLSIRL.png"
+                  alt="Prenda impresa"
+                  style={{ width: '72%', height: '80%', objectFit: 'contain' }}
+                  draggable={false}
+                />
+                <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.65rem', letterSpacing: '0.1em', color: 'var(--faint)', position: 'absolute', bottom: 16, right: 16 }}>
+                  IMPRESO · DTG
+                </span>
+              </div>
 
               {/* BEFORE — the flat file (clipped) */}
               <div className="absolute inset-0 flex flex-col items-center justify-center gap-3" style={{ clipPath: `inset(0 ${100 - pos}% 0 0)`, background: 'var(--paper)' }}>

@@ -61,8 +61,26 @@ function Proceso() {
   ]
   return (
     <section className="section-py relative" style={{ borderBottom: '1.5px solid var(--line)', overflow: 'visible' }}>
-      {/* Background image — div separado con overflow:hidden para no afectar las cards */}
+      {/* Capa 1 — foto real de fondo */}
       <div className="absolute inset-0 pointer-events-none" style={{ overflow: 'hidden', zIndex: 0 }}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/proceso3pasos.png"
+          alt=""
+          aria-hidden="true"
+          style={{
+            position: 'absolute', inset: 0,
+            width: '100%', height: '100%',
+            objectFit: 'cover',
+            objectPosition: 'center top',
+            opacity: 0.9,
+            maskImage: 'linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%)',
+            WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%)',
+          }}
+        />
+      </div>
+      {/* Capa 2 — textura cuadrícula encima con opacidad baja */}
+      <div className="absolute inset-0 pointer-events-none" style={{ overflow: 'hidden', zIndex: 1 }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/proceso-bg.jpg"
@@ -73,9 +91,7 @@ function Proceso() {
             width: '100%', height: '100%',
             objectFit: 'cover',
             objectPosition: 'center',
-            opacity: 0.55,
-            maskImage: 'linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%)',
-            WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%)',
+            opacity: 0.18,
           }}
         />
       </div>

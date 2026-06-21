@@ -87,7 +87,7 @@ export default function MarketingNav({ user }: { user?: any }) {
                   Entrar
                 </Link>
                 <Link
-                  href="/catalog"
+                  href="/register"
                   className="mk-btn mk-btn-primary"
                   style={{ padding: '8px 14px', fontSize: '0.8125rem' }}
                 >

@@ -44,6 +44,9 @@ export function OxxoLogo({ className }: { className?: string }) {
 
 export function SpeiLogo({ className }: { className?: string }) {
   return (
-    <img src="https://upload.wikimedia.org/wikipedia/commons/a/ae/SPEI_logo.png" alt="SPEI" className={className} style={{ width: 'auto', height: 18, objectFit: 'contain' }} />
+    <svg viewBox="0 0 60 24" className={className} style={{ width: 'auto', height: 24 }} xmlns="http://www.w3.org/2000/svg">
+      <title>SPEI</title>
+      <text x="0" y="18" fill="#00a94f" fontFamily="system-ui, -apple-system, sans-serif" fontSize="19" fontWeight="900" fontStyle="italic" letterSpacing="-0.5">SPEI</text>
+    </svg>
   )
 }

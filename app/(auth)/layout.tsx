@@ -20,7 +20,7 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
         }}
       />
 
-      <div className="w-full max-w-sm relative z-10 animate-fade-up">
+      <div className="w-full max-w-sm relative z-10 animate-fade-up is-visible">
         <div className="text-center mb-8">
           <Link href="/" aria-label="Stampia — inicio" className="inline-block transition-transform hover:scale-105">
             {/* eslint-disable-next-line @next/next/no-img-element */}

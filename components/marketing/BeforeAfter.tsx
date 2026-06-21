@@ -93,7 +93,7 @@ export default function BeforeAfter() {
               <div className="absolute inset-0 flex flex-col items-center justify-center gap-3" style={{ clipPath: `inset(0 ${100 - pos}% 0 0)`, background: 'var(--paper)' }}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src="/design.png"
+                  src="/design.jpeg"
                   alt="Diseño del archivo"
                   style={{ width: '72%', height: '80%', objectFit: 'contain' }}
                   draggable={false}

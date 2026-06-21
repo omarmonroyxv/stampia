@@ -7,7 +7,6 @@ import { useCartStore } from '@/lib/store/cart'
 import { createOrder } from '@/lib/orders/actions'
 import MockupPlayera from '@/components/ui/MockupPlayera'
 import type { ClipPaymentMethod } from '@/lib/clip'
-import type { ClipPaymentMethod } from '@/lib/clip'
 
 const MX_STATES = [
   'Aguascalientes','Baja California','Baja California Sur','Campeche','Chiapas','Chihuahua',

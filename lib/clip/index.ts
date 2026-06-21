@@ -8,6 +8,8 @@
  *   spei   — Transferencia bancaria SPEI (CLABE)
  */
 
+import { createHmac } from 'crypto'
+
 export type ClipPaymentMethod = 'card' | 'oxxo' | 'spei'
 
 export interface ClipChargeRequest {
@@ -148,8 +150,7 @@ export function verifyClipWebhook(rawBody: string, signature: string): boolean {
   if (!secret) return false
   const [algo, hash] = signature.split('=')
   if (algo !== 'sha256' || !hash) return false
-  const expected = require('crypto')
-    .createHmac('sha256', secret)
+  const expected = createHmac('sha256', secret)
     .update(rawBody)
     .digest('hex')
   return expected === hash

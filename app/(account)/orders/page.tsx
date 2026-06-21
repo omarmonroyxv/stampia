@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
+import { Package } from 'lucide-react'
 import { createClient } from '@/lib/supabase/server'
 import StatusBadge from '@/components/admin/StatusBadge'
 
@@ -17,7 +18,7 @@ export default async function CustomerOrdersPage() {
     .order('created_at', { ascending: false })
 
   return (
-    <div className="section-py">
+    <div className="mk section-py" style={{ minHeight: '100vh', background: 'var(--paper)' }}>
       <div className="layout-container-narrow">
         <h1 className="mk-display mb-10" style={{ fontSize: 'clamp(2rem,5vw,3rem)', color: 'var(--ink)' }}>
           Mis pedidos.
@@ -25,7 +26,7 @@ export default async function CustomerOrdersPage() {
 
         {!orders?.length ? (
           <div className="text-center py-24 flex flex-col items-center gap-6">
-            <div style={{ fontSize: 48 }}>📦</div>
+            <div style={{ color: 'var(--smoke)' }}><Package size={48} /></div>
             <p style={{ fontSize: '1.0625rem', color: 'var(--smoke)' }}>Aún no tienes pedidos.</p>
             <Link href="/catalog" className="mk-btn mk-btn-primary" style={{ padding: '12px 28px' }}>
               Ver catálogo

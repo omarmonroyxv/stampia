@@ -224,6 +224,8 @@ const CustomizerCanvas = forwardRef<CustomizerCanvasHandle, Props>(function Cust
 
       const pa   = getPa(printAreaRef.current)
       const rect = new Rect({
+        originX:        'left',
+        originY:        'top',
         left:           pa.left,
         top:            pa.top,
         width:          pa.width,

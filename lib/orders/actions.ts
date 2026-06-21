@@ -5,6 +5,7 @@ import { createAdminClient } from '@/lib/supabase/admin'
 import { createClipCharge, type ClipPaymentMethod } from '@/lib/clip'
 import type { CartItem } from '@/types/domain'
 import type { Json } from '@/types/database'
+import { SHIPPING_MXN, APP_URL } from '@/lib/constants'
 
 interface ShippingInput {
   name: string
@@ -47,7 +48,7 @@ export async function createOrder(
     return { error: 'Variantes invalidas' }
   }
 
-  const SHIPPING_MXN = 99
+
   const variantPriceMap = new Map(
     variants.map(v => [
       v.id,
@@ -106,7 +107,7 @@ export async function createOrder(
   const { error: itemsError } = await admin.from('order_items').insert(orderItems)
   if (itemsError) return { error: itemsError.message }
 
-  const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? 'https://stampia.shop'
+  const appUrl = APP_URL
   const shortId = order.id.slice(0, 8).toUpperCase()
 
   try {

@@ -1,48 +1,15 @@
 import Link from 'next/link'
-import Image from 'next/image'
 import { createClient } from '@/lib/supabase/server'
-import CartBadge from '@/components/ui/CartBadge'
-import NavUserMenu from '@/components/ui/NavUserMenu'
+import MarketingNav from '@/components/marketing/MarketingNav'
 
 export default async function ShopLayout({ children }: { children: React.ReactNode }) {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: 'var(--color-bg)' }}>
+    <div className="mk min-h-screen flex flex-col" style={{ background: 'var(--paper)' }}>
       {/* Nav */}
-      <header
-        className="sticky top-0 z-50 border-b"
-        style={{
-          background: 'rgba(251, 250, 246, 0.82)',
-          borderColor: 'var(--color-border)',
-          backdropFilter: 'blur(12px)',
-          WebkitBackdropFilter: 'blur(12px)',
-        }}
-      >
-        <div className="layout-container flex items-center justify-between h-16">
-          <Link href="/" aria-label="Stampia — inicio">
-            <Image src="/reallogo.png" alt="Stampia" width={120} height={34} style={{ height: 34, width: 'auto', objectFit: 'contain' }} priority />
-          </Link>
-
-          <nav className="hidden md:flex items-center gap-8">
-            <Link href="/catalog" className="mk-navlink">Catálogo</Link>
-            <Link href="/como-funciona" className="mk-navlink">Cómo funciona</Link>
-            <Link href="/precios" className="mk-navlink">Precios</Link>
-          </nav>
-
-          <div className="flex items-center gap-3">
-            <CartBadge />
-            {user ? (
-              <NavUserMenu user={user} />
-            ) : (
-              <Link href="/login" className="mk-btn mk-btn-primary" style={{ padding: '9px 18px', fontSize: '0.875rem' }}>
-                Entrar
-              </Link>
-            )}
-          </div>
-        </div>
-      </header>
+      <MarketingNav user={user} />
 
       {/* Main */}
       <main className="flex-1">{children}</main>
@@ -53,7 +20,8 @@ export default async function ShopLayout({ children }: { children: React.ReactNo
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-[1.4fr_1fr_1fr] gap-8">
             <div>
               <div className="mb-4">
-                <Image src="/reallogo.png" alt="Stampia" width={110} height={31} style={{ height: 31, width: 'auto', objectFit: 'contain', filter: 'brightness(0) invert(1)' }} />
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/reallogo.png" alt="Stampia" width={110} height={31} style={{ height: 31, width: 'auto', objectFit: 'contain', filter: 'brightness(0) invert(1)' }} />
               </div>
               <p style={{ fontSize: '0.9375rem', lineHeight: 1.6, color: 'rgba(255,255,255,0.5)', maxWidth: '20rem' }}>
                 Taller de impresión bajo demanda. Tu diseño, impreso y enviado a cualquier rincón de México.

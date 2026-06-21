@@ -1,7 +1,6 @@
 'use client'
 
 import Link from 'next/link'
-import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { Printer, Tag, Shirt, Users, Mail, BookOpen } from 'lucide-react'
@@ -28,19 +27,22 @@ const NAV_ITEMS = [
 function Wordmark({ dark }: { dark: boolean }) {
   return (
     <Link href="/" aria-label="Stampia — inicio">
-      <Image
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
         src="/reallogo.png"
         alt="Stampia"
         width={120}
         height={34}
         style={{ height: 34, width: 'auto', objectFit: 'contain', filter: dark ? 'brightness(0) invert(1)' : 'none', transition: 'filter .3s ease' }}
-        priority
       />
     </Link>
   )
 }
 
-export default function MarketingNav() {
+import CartBadge from '@/components/ui/CartBadge'
+import NavUserMenu from '@/components/ui/NavUserMenu'
+
+export default function MarketingNav({ user }: { user?: any }) {
   const pathname = usePathname()
   const [dark, setDark] = useState(false)
 
@@ -72,20 +74,27 @@ export default function MarketingNav() {
           <Wordmark dark={dark} />
 
           <div className="flex items-center gap-3">
-            <Link
-              href="/login"
-              className="hidden sm:inline-flex"
-              style={{ fontFamily: 'var(--font-public)', fontWeight: 600, fontSize: '0.875rem', textDecoration: 'none', color: dark ? '#fff' : 'var(--ink)', transition: 'color .3s ease' }}
-            >
-              Entrar
-            </Link>
-            <Link
-              href="/catalog"
-              className="mk-btn mk-btn-primary"
-              style={{ padding: '8px 14px', fontSize: '0.8125rem' }}
-            >
-              Empieza
-            </Link>
+            <CartBadge />
+            {user ? (
+              <NavUserMenu user={user} />
+            ) : (
+              <>
+                <Link
+                  href="/login"
+                  className="hidden sm:inline-flex"
+                  style={{ fontFamily: 'var(--font-public)', fontWeight: 600, fontSize: '0.875rem', textDecoration: 'none', color: dark ? '#fff' : 'var(--ink)', transition: 'color .3s ease' }}
+                >
+                  Entrar
+                </Link>
+                <Link
+                  href="/catalog"
+                  className="mk-btn mk-btn-primary"
+                  style={{ padding: '8px 14px', fontSize: '0.8125rem' }}
+                >
+                  Empieza
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </header>

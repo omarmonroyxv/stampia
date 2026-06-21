@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { Lock, Truck } from 'lucide-react'
 import { useCartStore } from '@/lib/store/cart'
 import MockupPlayera from '@/components/ui/MockupPlayera'
 
@@ -17,21 +18,18 @@ export default function CartPage() {
   const total    = subtotal + (items.length > 0 ? SHIPPING_MXN : 0)
 
   return (
-    <div className="section-py">
+    <div className="section-py pt-32">
       <div className="layout-container-narrow">
-        <h1
-          className="font-serif italic text-4xl tracking-tight mb-12"
-          style={{ color: 'var(--color-text)' }}
-        >
+        <h1 className="mk-display text-4xl mb-12 border-b pb-4" style={{ borderColor: 'var(--line)' }}>
           Tu carrito.
         </h1>
 
         {items.length === 0 ? (
           <div className="text-center py-24">
-            <p className="font-serif italic text-2xl mb-6" style={{ color: 'var(--color-muted)' }}>
+            <p className="text-xl font-medium mb-6" style={{ color: 'var(--smoke)' }}>
               Tu carrito está vacío.
             </p>
-            <Link href="/catalog" className="btn-primary">Ver catálogo</Link>
+            <Link href="/catalog" className="mk-btn mk-btn-primary">Ver catálogo</Link>
           </div>
         ) : (
           <div className="grid md:grid-cols-3 gap-12">
@@ -94,15 +92,15 @@ export default function CartPage() {
                     </div>
                   </div>
                   <div className="text-right flex-shrink-0">
-                    <p className="font-serif italic font-bold">
+                    <p className="mk-display text-xl">
                       ${(item.unitPriceMxn * item.quantity).toFixed(0)}
                     </p>
-                    <p className="text-xs" style={{ color: 'var(--color-muted)' }}>MXN</p>
+                    <p className="text-xs font-bold" style={{ color: 'var(--smoke)' }}>MXN</p>
                   </div>
                 </div>
               ))}
-              <div className="mt-6">
-                <Link href="/catalog" className="text-sm font-medium transition-colors" style={{ color: 'var(--color-brand)' }}>
+              <div className="mt-8">
+                <Link href="/catalog" className="text-sm font-semibold transition-colors" style={{ color: 'var(--cinnabar)' }}>
                   ← Seguir comprando
                 </Link>
               </div>
@@ -110,29 +108,39 @@ export default function CartPage() {
 
             {/* Order summary */}
             <div>
-              <div className="card p-6 sticky top-24">
-                <h3 className="font-sans font-bold mb-4">Resumen</h3>
-                <div className="flex justify-between text-sm mb-2">
-                  <span style={{ color: 'var(--color-muted)' }}>Subtotal</span>
-                  <span>${subtotal.toFixed(0)} MXN</span>
+              <div className="mk-card p-6 sticky top-28">
+                <h3 className="font-sans font-bold text-lg mb-6">Resumen de orden</h3>
+                <div className="flex justify-between text-sm mb-3">
+                  <span style={{ color: 'var(--smoke)' }}>Subtotal</span>
+                  <span className="font-medium">${subtotal.toFixed(0)} MXN</span>
                 </div>
                 <div className="flex justify-between text-sm mb-4">
-                  <span style={{ color: 'var(--color-muted)' }}>Envío</span>
-                  <span>${SHIPPING_MXN} MXN</span>
+                  <span style={{ color: 'var(--smoke)' }}>Envío</span>
+                  <span className="font-medium">${SHIPPING_MXN} MXN</span>
                 </div>
                 <div
-                  className="flex justify-between font-bold text-base pt-4 border-t mb-6"
-                  style={{ borderColor: 'var(--color-border)' }}
+                  className="flex justify-between items-end pt-4 border-t mb-8"
+                  style={{ borderColor: 'var(--line)' }}
                 >
-                  <span>Total</span>
-                  <span className="font-serif italic">${total.toFixed(0)} MXN</span>
+                  <span className="font-bold text-sm">Total</span>
+                  <span className="mk-display text-3xl">${total.toFixed(0)} <span className="text-sm font-sans font-bold" style={{ color: 'var(--smoke)' }}>MXN</span></span>
                 </div>
                 <button
                   onClick={() => router.push('/checkout')}
-                  className="btn-primary w-full justify-center"
+                  className="mk-btn mk-btn-primary w-full justify-center text-base"
                 >
                   Proceder al pago
                 </button>
+                <div className="mt-6 pt-6 border-t flex flex-col gap-3" style={{ borderColor: 'var(--line)' }}>
+                  <div className="flex items-center gap-2 text-[0.8125rem]" style={{ color: 'var(--smoke)' }}>
+                    <Lock size={14} />
+                    <span>Pago 100% seguro y encriptado</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-[0.8125rem]" style={{ color: 'var(--smoke)' }}>
+                    <Truck size={14} />
+                    <span>Envío rápido a todo México</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

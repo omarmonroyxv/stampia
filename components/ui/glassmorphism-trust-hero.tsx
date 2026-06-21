@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { ArrowRight, Printer, BadgeCheck } from 'lucide-react'
-import { siVisa, siMastercard, siMercadopago } from 'simple-icons'
+import { siVisa, siMastercard } from 'simple-icons'
 import RegMarks from '@/components/marketing/RegMarks'
 import { GlowingShadow } from '@/components/ui/glowing-shadow'
 import MagneticButton from '@/components/marketing/MagneticButton'
@@ -12,7 +12,7 @@ type Pay = { path?: string; title: string; showName?: boolean }
 const PAYMENTS: Pay[] = [
   { path: siVisa.path, title: 'Visa' },
   { path: siMastercard.path, title: 'Mastercard', showName: true },
-  { path: siMercadopago.path, title: 'Mercado Pago', showName: true },
+  { title: 'Clip', showName: true },
   { title: 'OXXO', showName: true },
   { title: 'SPEI', showName: true },
 ]

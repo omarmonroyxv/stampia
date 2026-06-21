@@ -2,12 +2,12 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { Store, Landmark, Package, CreditCard, Lock, MapPin, Truck, ShoppingBag } from 'lucide-react'
 import { useCartStore } from '@/lib/store/cart'
 import { createOrder } from '@/lib/orders/actions'
 import MockupPlayera from '@/components/ui/MockupPlayera'
 import type { ClipPaymentMethod } from '@/lib/clip'
-
-const SHIPPING_MXN = 99
+import { SHIPPING_MXN } from '@/lib/constants'
 
 const MX_STATES = [
   'Aguascalientes','Baja California','Baja California Sur','Campeche','Chiapas','Chihuahua',
@@ -45,7 +45,7 @@ function PaymentOption({ id, label, description, icon, selected, onSelect }: {
   return (
     <button type="button" onClick={onSelect} className="w-full flex items-center gap-4 text-left transition-all"
       style={{ padding: '14px 18px', borderRadius: 12, border: selected ? '2px solid #EC3A12' : '1.5px solid #D1D5DB', background: selected ? 'rgba(236,58,18,0.04)' : 'var(--bg)' }}>
-      <div className="flex items-center justify-center shrink-0" style={{ width: 40, height: 40, borderRadius: 10, background: selected ? 'rgba(236,58,18,0.1)' : '#F3F4F6', color: selected ? '#EC3A12' : '#6B7280', transition: 'all .2s' }}>
+      <div className="flex items-center justify-center shrink-0" style={{ minWidth: 40, padding: '0 8px', height: 40, borderRadius: 10, background: selected ? 'rgba(236,58,18,0.1)' : '#F3F4F6', color: selected ? '#EC3A12' : '#6B7280', transition: 'all .2s' }}>
         {icon}
       </div>
       <div className="flex-1 min-w-0">
@@ -61,7 +61,9 @@ function OxxoResult({ reference, expiresAt, total }: { reference: string; expire
   const [copied, setCopied] = useState(false)
   return (
     <div className="flex flex-col items-center text-center gap-6 py-8">
-      <div style={{ width: 72, height: 72, borderRadius: '50%', background: 'rgba(234,179,8,0.12)', border: '2px solid rgba(234,179,8,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 32 }}>🏪</div>
+      <div style={{ width: 72, height: 72, borderRadius: '50%', background: 'rgba(234,179,8,0.12)', border: '2px solid rgba(234,179,8,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#CA8A04' }}>
+        <Store size={32} />
+      </div>
       <div>
         <p style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#6B7280', marginBottom: 8 }}>Pago en OXXO</p>
         <h2 style={{ fontSize: 'clamp(1.5rem,4vw,2.2rem)', fontWeight: 900, color: 'var(--ink)' }}>Tu referencia de pago</h2>
@@ -89,7 +91,9 @@ function SpeiResult({ clabe, expiresAt, total }: { clabe: string; expiresAt?: st
   ]
   return (
     <div className="flex flex-col items-center text-center gap-6 py-8">
-      <div style={{ width: 72, height: 72, borderRadius: '50%', background: 'rgba(99,102,241,0.1)', border: '2px solid rgba(99,102,241,0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 32 }}>🏦</div>
+      <div style={{ width: 72, height: 72, borderRadius: '50%', background: 'rgba(99,102,241,0.1)', border: '2px solid rgba(99,102,241,0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#4F46E5' }}>
+        <Landmark size={32} />
+      </div>
       <div>
         <p style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#6B7280', marginBottom: 8 }}>Transferencia SPEI</p>
         <h2 style={{ fontSize: 'clamp(1.5rem,4vw,2.2rem)', fontWeight: 900, color: 'var(--ink)' }}>Datos de transferencia</h2>
@@ -111,9 +115,7 @@ function SpeiResult({ clabe, expiresAt, total }: { clabe: string; expiresAt?: st
   )
 }
 
-const CardIcon = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-const OxxoIcon = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9h18v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9z"/><path d="M3 9V7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v2"/><line x1="12" y1="12" x2="12" y2="18"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
-const SpeiIcon = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+import { VisaLogo, MastercardLogo, AmexLogo, OxxoLogo, SpeiLogo } from '@/components/ui/PaymentLogos'
 
 type PendingResult = { orderId: string; paymentMethod: ClipPaymentMethod; checkoutUrl?: string; oxxoReference?: string; speiClabe?: string; expiresAt?: string }
 
@@ -193,7 +195,10 @@ export default function CheckoutPage() {
 
             {/* Envío */}
             <div className="rounded-2xl p-6 flex flex-col gap-5" style={{ border: '1.5px solid #E5E7EB', background: 'var(--bg)' }}>
-              <h2 style={{ fontWeight: 800, fontSize: '1rem', color: 'var(--ink)' }}>📦 Dirección de envío</h2>
+              <h2 className="flex items-center gap-2" style={{ fontWeight: 800, fontSize: '1rem', color: 'var(--ink)' }}>
+                <Package size={18} />
+                Dirección de envío
+              </h2>
               <Field label="Nombre completo">
                 <input name="name" required autoComplete="name" placeholder="Juan Pérez García" className={IC} style={IS} />
               </Field>
@@ -227,16 +232,25 @@ export default function CheckoutPage() {
 
             {/* Pago */}
             <div className="rounded-2xl p-6 flex flex-col gap-4" style={{ border: '1.5px solid #E5E7EB', background: 'var(--bg)' }}>
-              <h2 style={{ fontWeight: 800, fontSize: '1rem', color: 'var(--ink)' }}>💳 Método de pago</h2>
-              <PaymentOption id="card" label="Tarjeta de crédito o débito" description="Visa, Mastercard, Amex — pago seguro" icon={<CardIcon />} selected={paymentMethod === 'card'} onSelect={() => setPaymentMethod('card')} />
-              <PaymentOption id="oxxo" label="OXXO" description="Paga en efectivo en cualquier OXXO de México" icon={<OxxoIcon />} selected={paymentMethod === 'oxxo'} onSelect={() => setPaymentMethod('oxxo')} />
-              <PaymentOption id="spei" label="SPEI — Transferencia bancaria" description="Transfiere desde tu banca en línea" icon={<SpeiIcon />} selected={paymentMethod === 'spei'} onSelect={() => setPaymentMethod('spei')} />
+              <h2 className="flex items-center gap-2" style={{ fontWeight: 800, fontSize: '1rem', color: 'var(--ink)' }}>
+                <CreditCard size={18} />
+                Método de pago
+              </h2>
+              <PaymentOption id="card" label="Tarjeta de crédito o débito" description="Visa, Mastercard, Amex — pago seguro" icon={<div className="flex gap-1.5"><VisaLogo /><MastercardLogo /><AmexLogo /></div>} selected={paymentMethod === 'card'} onSelect={() => setPaymentMethod('card')} />
+              <PaymentOption id="oxxo" label="OXXO" description="Paga en efectivo en cualquier OXXO de México" icon={<OxxoLogo />} selected={paymentMethod === 'oxxo'} onSelect={() => setPaymentMethod('oxxo')} />
+              <PaymentOption id="spei" label="SPEI — Transferencia bancaria" description="Transfiere desde tu banca en línea" icon={<SpeiLogo />} selected={paymentMethod === 'spei'} onSelect={() => setPaymentMethod('spei')} />
             </div>
 
             <div className="flex flex-wrap gap-2">
-              {['🔒 Pago 100% seguro', '🇲🇽 Métodos locales MX', '📦 Envío rastreable'].map(b => (
-                <span key={b} style={{ fontSize: '0.775rem', color: '#6B7280', background: '#F9FAFB', padding: '5px 12px', borderRadius: 99, border: '1px solid #E5E7EB' }}>{b}</span>
-              ))}
+              <span className="flex items-center gap-1.5" style={{ fontSize: '0.775rem', color: '#6B7280', background: '#F9FAFB', padding: '5px 12px', borderRadius: 99, border: '1px solid #E5E7EB' }}>
+                <Lock size={12} /> Pago 100% seguro
+              </span>
+              <span className="flex items-center gap-1.5" style={{ fontSize: '0.775rem', color: '#6B7280', background: '#F9FAFB', padding: '5px 12px', borderRadius: 99, border: '1px solid #E5E7EB' }}>
+                <MapPin size={12} /> Métodos locales MX
+              </span>
+              <span className="flex items-center gap-1.5" style={{ fontSize: '0.775rem', color: '#6B7280', background: '#F9FAFB', padding: '5px 12px', borderRadius: 99, border: '1px solid #E5E7EB' }}>
+                <Truck size={12} /> Envío rastreable
+              </span>
             </div>
 
             {error && <p className="text-sm px-4 py-3 rounded-xl" style={{ color: '#b91c1c', background: '#fef2f2', border: '1px solid #fecaca' }}>{error}</p>}
@@ -250,7 +264,10 @@ export default function CheckoutPage() {
           {/* Order summary */}
           <div className="sticky top-24">
             <div className="rounded-2xl p-6 flex flex-col gap-5" style={{ border: '1.5px solid #E5E7EB', background: 'var(--bg)' }}>
-              <h3 style={{ fontWeight: 800, fontSize: '1rem', color: 'var(--ink)' }}>🛒 Tu pedido</h3>
+              <h3 className="flex items-center gap-2" style={{ fontWeight: 800, fontSize: '1rem', color: 'var(--ink)' }}>
+                <ShoppingBag size={18} />
+                Tu pedido
+              </h3>
               <div className="flex flex-col gap-4">
                 {items.map((item) => (
                   <div key={item.variantId + (item.designUrl ?? '')} className="flex items-center gap-3">
@@ -279,17 +296,21 @@ export default function CheckoutPage() {
                   <span style={{ fontSize: '1.25rem', color: 'var(--ink)' }}>${total.toFixed(0)} MXN</span>
                 </div>
               </div>
-              <div className="rounded-xl p-4 flex gap-3" style={{ background: 'rgba(236,58,18,0.04)', border: '1px solid rgba(236,58,18,0.12)' }}>
-                <span style={{ fontSize: 20 }}>🚚</span>
+              <div className="rounded-xl p-4 flex gap-3 items-center" style={{ background: 'rgba(236,58,18,0.04)', border: '1px solid rgba(236,58,18,0.12)' }}>
+                <div style={{ color: 'var(--cinnabar)' }}>
+                  <Truck size={24} />
+                </div>
                 <div>
                   <p style={{ fontSize: '0.8125rem', fontWeight: 700, color: 'var(--ink)' }}>Envío a todo México</p>
                   <p style={{ fontSize: '0.75rem', color: '#6B7280', marginTop: 2 }}>5–7 días hábiles · Rastreable</p>
                 </div>
               </div>
-              <div className="flex flex-wrap gap-1.5 justify-center" style={{ borderTop: '1.5px solid #E5E7EB', paddingTop: 16 }}>
-                {['VISA', 'MC', 'AMEX', 'OXXO', 'SPEI'].map(b => (
-                  <span key={b} style={{ fontSize: '0.6rem', letterSpacing: '0.1em', padding: '4px 10px', borderRadius: 6, border: '1.5px solid #E5E7EB', color: '#6B7280', background: '#FAFAFA', fontWeight: 700 }}>{b}</span>
-                ))}
+              <div className="flex flex-wrap gap-2 justify-center items-center" style={{ borderTop: '1.5px solid #E5E7EB', paddingTop: 16 }}>
+                <VisaLogo className="grayscale hover:grayscale-0 opacity-70 hover:opacity-100 transition-all cursor-pointer" />
+                <MastercardLogo className="grayscale hover:grayscale-0 opacity-70 hover:opacity-100 transition-all cursor-pointer" />
+                <AmexLogo className="grayscale hover:grayscale-0 opacity-70 hover:opacity-100 transition-all cursor-pointer" />
+                <OxxoLogo className="grayscale hover:grayscale-0 opacity-70 hover:opacity-100 transition-all cursor-pointer" />
+                <SpeiLogo className="grayscale hover:grayscale-0 opacity-70 hover:opacity-100 transition-all cursor-pointer" />
               </div>
             </div>
           </div>

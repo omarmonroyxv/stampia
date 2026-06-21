@@ -2,9 +2,11 @@
 
 import { useState, useMemo } from 'react'
 import { useRouter } from 'next/navigation'
+import { Printer, Package, CheckCircle2, Palette, Zap } from 'lucide-react'
 import type { ProductWithVariants, ColorOption, Size } from '@/types/product'
 import { SIZE_ORDER } from '@/types/product'
 import MockupPlayera from '@/components/ui/MockupPlayera'
+import AnimateOnScroll from '@/components/ui/AnimateOnScroll'
 
 function uniqueColors(variants: ProductWithVariants['product_variants']): ColorOption[] {
   const seen = new Set<string>()
@@ -18,10 +20,10 @@ function uniqueColors(variants: ProductWithVariants['product_variants']): ColorO
 }
 
 const TRUST_BADGES = [
-  { icon: '🖨️', label: 'Impresión DTF premium' },
-  { icon: '📦', label: 'Envío a todo México' },
-  { icon: '✅', label: 'Sin mínimo de piezas' },
-  { icon: '🎨', label: 'Tu diseño en minutos' },
+  { Icon: Printer, label: 'Impresión DTF premium' },
+  { Icon: Package, label: 'Envío a todo México' },
+  { Icon: CheckCircle2, label: 'Sin mínimo de piezas' },
+  { Icon: Palette, label: 'Tu diseño en minutos' },
 ]
 
 const SIZE_GUIDE = [
@@ -129,16 +131,14 @@ export default function ProductDetail({ product }: { product: ProductWithVariant
         </div>
 
         {/* Trust badges */}
-        <div
-          className="grid grid-cols-2 gap-2 mt-4"
-        >
+        <div className="grid grid-cols-2 gap-2 mt-4">
           {TRUST_BADGES.map(b => (
             <div
               key={b.label}
-              className="flex items-center gap-2 px-3 py-2.5 rounded-xl text-xs font-medium"
-              style={{ background: 'var(--color-bg)', border: '1px solid var(--color-border)', color: 'var(--color-muted)' }}
+              className="flex items-center gap-2 px-3 py-3 rounded-xl text-[0.8125rem] font-semibold"
+              style={{ background: 'var(--paper)', border: '1px solid var(--line)', color: 'var(--smoke)' }}
             >
-              <span className="text-base">{b.icon}</span>
+              <b.Icon size={16} style={{ color: 'var(--cinnabar)' }} />
               {b.label}
             </div>
           ))}
@@ -146,34 +146,28 @@ export default function ProductDetail({ product }: { product: ProductWithVariant
       </div>
 
       {/* ── RIGHT: Info + selectors ── */}
-      <div>
+      <AnimateOnScroll>
         {/* Category label */}
-        <p className="label-sm mb-2" style={{ color: 'var(--color-brand)' }}>Playera personalizada</p>
+        <p className="mk-spec mb-3">Playera personalizada</p>
 
         {/* Product name */}
-        <h1
-          className="font-serif text-4xl lg:text-5xl font-bold leading-tight mb-4"
-          style={{ color: 'var(--color-text)', letterSpacing: '-0.03em' }}
-        >
+        <h1 className="mk-display text-4xl lg:text-5xl mb-4 text-balance">
           {product.name}
         </h1>
 
         {/* Description */}
         {product.description && (
-          <p className="text-base leading-relaxed mb-6" style={{ color: 'var(--color-muted)' }}>
+          <p className="text-base leading-relaxed mb-8" style={{ color: 'var(--smoke)', maxWidth: '90%' }}>
             {product.description}
           </p>
         )}
 
         {/* Price */}
-        <div className="flex items-baseline gap-3 mb-8">
-          <span
-            className="font-serif text-5xl font-bold"
-            style={{ color: 'var(--color-text)', letterSpacing: '-0.04em' }}
-          >
+        <div className="flex items-baseline gap-3 mb-10">
+          <span className="mk-display text-5xl">
             ${totalPrice.toFixed(0)}
           </span>
-          <span className="text-sm font-medium" style={{ color: 'var(--color-muted)' }}>MXN</span>
+          <span className="text-sm font-bold" style={{ color: 'var(--smoke)' }}>MXN</span>
           {qty > 1 && (
             <span className="text-sm" style={{ color: 'var(--color-faint)' }}>
               (${unitPrice.toFixed(0)} c/u)
@@ -331,8 +325,8 @@ export default function ProductDetail({ product }: { product: ProductWithVariant
         <button
           onClick={() => selectedVariant && router.push(`/customize/${selectedVariant.id}`)}
           disabled={!selectedVariant}
-          className="btn-primary w-full justify-center py-4 text-base font-bold"
-          style={!selectedVariant ? { opacity: 0.45, cursor: 'not-allowed' } : {}}
+          className="mk-btn mk-btn-primary w-full justify-center py-4 text-base"
+          style={!selectedVariant ? { filter: 'grayscale(1)', opacity: 0.5, cursor: 'not-allowed' } : {}}
         >
           {selectedVariant
             ? `Personalizar → $${totalPrice.toFixed(0)} MXN`
@@ -340,29 +334,32 @@ export default function ProductDetail({ product }: { product: ProductWithVariant
         </button>
 
         {/* Shipping note */}
-        <p className="mt-3 text-sm text-center" style={{ color: 'var(--color-faint)' }}>
-          🚚 Envío a toda la República · 5–7 días hábiles · Pago seguro
-        </p>
+        <div className="mt-4 flex items-center justify-center gap-2 text-[0.8125rem]" style={{ color: 'var(--smoke)' }}>
+          <Package size={14} />
+          <span>Envío a toda la República · 5–7 días hábiles · Pago seguro</span>
+        </div>
 
         {/* Features list */}
         <div
-          className="mt-6 rounded-2xl p-5 space-y-3"
-          style={{ background: 'var(--color-bg)', border: '1px solid var(--color-border)' }}
+          className="mt-8 rounded-2xl p-6 space-y-4"
+          style={{ background: 'var(--paper-2)', border: '1px solid var(--line)' }}
         >
-          <p className="label-sm mb-1">¿Por qué Stampia?</p>
+          <p className="mk-spec mb-2 text-xs">¿Por qué Stampia?</p>
           {[
-            { icon: '🖨️', text: 'Impresión DTF de alta definición, colores que duran lavado tras lavado' },
-            { icon: '⚡', text: 'Producción express — tu pedido listo en 2–3 días hábiles' },
-            { icon: '🎨', text: 'Sube tu diseño o créalo desde cero en nuestro editor' },
-            { icon: '📦', text: 'Empaque profesional, ideal para regalo o marca personal' },
+            { Icon: Printer, text: 'Impresión DTF de alta definición, colores que duran lavado tras lavado' },
+            { Icon: Zap, text: 'Producción express — tu pedido listo en 2–3 días hábiles' },
+            { Icon: Palette, text: 'Sube tu diseño o créalo desde cero en nuestro editor' },
+            { Icon: Package, text: 'Empaque profesional, ideal para regalo o marca personal' },
           ].map(f => (
-            <div key={f.text} className="flex gap-3 items-start">
-              <span className="text-lg flex-shrink-0 mt-0.5">{f.icon}</span>
-              <p className="text-sm leading-relaxed" style={{ color: 'var(--color-muted)' }}>{f.text}</p>
+            <div key={f.text} className="flex gap-4 items-start">
+              <div className="mt-0.5" style={{ color: 'var(--cinnabar)' }}>
+                <f.Icon size={18} />
+              </div>
+              <p className="text-sm leading-relaxed" style={{ color: 'var(--smoke)' }}>{f.text}</p>
             </div>
           ))}
         </div>
-      </div>
+      </AnimateOnScroll>
     </div>
   )
 }

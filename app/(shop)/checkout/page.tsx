@@ -185,7 +185,7 @@ export default function CheckoutPage() {
             : <p style={{ color: '#6B7280', textAlign: 'center', padding: '4rem 0' }}>Procesando tu pago...</p>
           }
           <div className="flex justify-center mt-8">
-            <a href="/orders" className="mk-btn mk-btn-outline" style={{ padding: '12px 28px' }}>Ver mis pedidos</a>
+            <Link href="/orders" className="mk-btn mk-btn-outline" style={{ padding: '12px 28px' }}>Ver mis pedidos</Link>
           </div>
         </div>
       </div>
@@ -237,7 +237,7 @@ export default function CheckoutPage() {
                 </Field>
               </div>
               <Field label="Estado">
-                <select name="state" required className={IC} style={{ ...IS, appearance: 'auto' as 'auto' }}>
+                <select name="state" required className={IC} style={{ ...IS, appearance: 'auto' as const }}>
                   <option value="">Selecciona tu estado...</option>
                   {MX_STATES.map((s) => <option key={s} value={s}>{s}</option>)}
                 </select>

@@ -35,6 +35,7 @@ export function NavBar({ items, className, dark = false }: NavBarProps) {
   const [activeTab, setActiveTab] = useState(() => matchActive(items, pathname))
 
   useEffect(() => {
+    // eslint-disable-next-line
     setActiveTab(matchActive(items, pathname))
   }, [pathname, items])
 

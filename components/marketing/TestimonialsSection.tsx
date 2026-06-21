@@ -1,7 +1,7 @@
 'use client'
 
 import { useRef, useState } from 'react'
-import { motion, useAnimationFrame } from 'framer-motion'
+import { useAnimationFrame } from 'framer-motion'
 import { Star, CheckCircle2 } from 'lucide-react'
 import AnimateOnScroll from '@/components/ui/AnimateOnScroll'
 
@@ -145,7 +145,7 @@ function TestimonialCard({ t }: { t: Testimonial }) {
 
       {/* Text */}
       <p style={{ fontSize: '0.875rem', lineHeight: 1.65, color: 'var(--smoke)', flex: 1 }}>
-        "{t.text}"
+        &quot;{t.text}&quot;
       </p>
 
       {/* Product tag */}

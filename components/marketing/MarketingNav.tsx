@@ -42,7 +42,9 @@ function Wordmark({ dark }: { dark: boolean }) {
 import CartBadge from '@/components/ui/CartBadge'
 import NavUserMenu from '@/components/ui/NavUserMenu'
 
-export default function MarketingNav({ user }: { user?: any }) {
+import type { User } from '@supabase/supabase-js'
+
+export default function MarketingNav({ user }: { user?: User | null }) {
   const pathname = usePathname()
   const [dark, setDark] = useState(false)
 

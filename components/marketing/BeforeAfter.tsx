@@ -90,23 +90,17 @@ export default function BeforeAfter() {
               </svg>
 
               {/* BEFORE — the flat file (clipped) */}
-              <div className="absolute inset-0" style={{ clipPath: `inset(0 ${100 - pos}% 0 0)`, background: 'var(--paper)' }}>
-                <svg viewBox="0 0 400 400" className="absolute inset-0 w-full h-full" aria-hidden="true">
-                  <defs>
-                    <pattern id="baHt2" width="9" height="9" patternUnits="userSpaceOnUse"><circle cx="4.5" cy="4.5" r="2" fill="#ec3a12" /></pattern>
-                  </defs>
-                  <rect x="150" y="158" width="100" height="100" rx="3" fill="none" stroke="#1b2bd8" strokeWidth="1.4" strokeDasharray="6 5" />
-                  <g stroke="#14110e" strokeWidth="1" opacity="0.6">
-                    <g><line x1="143" y1="158" x2="157" y2="158" /><line x1="150" y1="151" x2="150" y2="165" /></g>
-                    <g><line x1="243" y1="158" x2="257" y2="158" /><line x1="250" y1="151" x2="250" y2="165" /></g>
-                    <g><line x1="143" y1="258" x2="157" y2="258" /><line x1="150" y1="251" x2="150" y2="265" /></g>
-                    <g><line x1="243" y1="258" x2="257" y2="258" /><line x1="250" y1="251" x2="250" y2="265" /></g>
-                  </g>
-                  <g><circle cx="200" cy="208" r="44" fill="url(#baHt2)" /><circle cx="200" cy="208" r="44" fill="#ec3a12" opacity="0.12" />
-                  <g stroke="#14110e" strokeWidth="7" strokeLinecap="round"><line x1="200" y1="178" x2="200" y2="238" /><line x1="174" y1="193" x2="226" y2="223" /><line x1="174" y1="223" x2="226" y2="193" /></g></g>
-                  <text x="34" y="44" fontFamily="var(--font-mono)" fontSize="11" fill="#6f675e" letterSpacing="1">tu-arte.png</text>
-                  <text x="34" y="372" fontFamily="var(--font-mono)" fontSize="11" fill="#9a9389" letterSpacing="2">ARCHIVO · 4500×5400</text>
-                </svg>
+              <div className="absolute inset-0 flex flex-col items-center justify-center gap-3" style={{ clipPath: `inset(0 ${100 - pos}% 0 0)`, background: 'var(--paper)' }}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/design.png"
+                  alt="Diseño del archivo"
+                  style={{ width: '72%', height: '80%', objectFit: 'contain' }}
+                  draggable={false}
+                />
+                <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.65rem', letterSpacing: '0.1em', color: 'var(--faint)', position: 'absolute', bottom: 16, left: 16 }}>
+                  MI DISEÑO
+                </span>
               </div>
 
               {/* Divider + handle */}

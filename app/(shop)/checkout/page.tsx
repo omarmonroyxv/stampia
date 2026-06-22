@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { Store, Landmark, Package, CreditCard, Lock, MapPin, Truck, ShoppingBag } from 'lucide-react'
@@ -150,7 +150,13 @@ export default function CheckoutPage() {
   const finalShipping = shippingCost ?? 120 // Fallback visual
   const total = subtotal + finalShipping
 
-  if (items.length === 0 && !pendingResult) { router.replace('/cart'); return null }
+  useEffect(() => {
+    if (items.length === 0 && !pendingResult) {
+      router.replace('/cart')
+    }
+  }, [items.length, pendingResult, router])
+
+  if (items.length === 0 && !pendingResult) return null
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()

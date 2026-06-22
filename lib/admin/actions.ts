@@ -138,7 +138,7 @@ export async function retriggerFulfillment(orderId: string): Promise<{ error?: s
 
   const { data: items } = await supabase
     .from('order_items')
-    .select('variant_id, design_url, quantity, product_variants(printful_variant_id)')
+    .select('product_variant_id, design_url, quantity, product_variants(printful_variant_id)')
     .eq('order_id', orderId)
 
   if (!items?.length) return { error: 'La orden no tiene items' }
@@ -148,7 +148,7 @@ export async function retriggerFulfillment(orderId: string): Promise<{ error?: s
     .map(function(i) {
       const variant = Array.isArray(i.product_variants) ? i.product_variants[0] : i.product_variants
       return {
-        variantId:         variant?.printful_variant_id ?? i.variant_id,
+        variantId:         variant?.printful_variant_id ?? (i as any).product_variant_id,
         printfulVariantId: variant?.printful_variant_id ?? undefined,
         designUrl:         i.design_url!,
         quantity:          i.quantity,

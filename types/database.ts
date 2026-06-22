@@ -13,7 +13,7 @@ export type Database = {
         Row: {
           id: string
           order_id: string
-          variant_id: string
+          product_variant_id: string
           design_url: string | null
           design_width: number | null
           design_height: number | null
@@ -24,7 +24,7 @@ export type Database = {
         Insert: {
           id?: string
           order_id: string
-          variant_id: string
+          product_variant_id: string
           design_url?: string | null
           design_width?: number | null
           design_height?: number | null
@@ -35,7 +35,7 @@ export type Database = {
         Update: {
           id?: string
           order_id?: string
-          variant_id?: string
+          product_variant_id?: string
           design_url?: string | null
           design_width?: number | null
           design_height?: number | null
@@ -52,8 +52,8 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "order_items_variant_id_fkey"
-            columns: ["variant_id"]
+            foreignKeyName: "order_items_product_variant_id_fkey"
+            columns: ["product_variant_id"]
             isOneToOne: false
             referencedRelation: "product_variants"
             referencedColumns: ["id"]

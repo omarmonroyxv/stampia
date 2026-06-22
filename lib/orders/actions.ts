@@ -96,7 +96,7 @@ export async function createOrder(
 
   const orderItems = items.map(item => ({
     order_id: order.id,
-    variant_id: item.variantId,
+    product_variant_id: item.variantId,
     design_url: item.designUrl ?? null,
     design_width: item.designWidth ?? null,
     design_height: item.designHeight ?? null,

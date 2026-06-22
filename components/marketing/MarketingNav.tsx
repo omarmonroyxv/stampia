@@ -104,7 +104,7 @@ export default function MarketingNav({ user }: { user?: User | null }) {
       </header>
 
       {/* Tubelight floating nav — top-center on desktop, bottom icon-bar on mobile */}
-      <NavBar items={NAV_ITEMS} dark={dark} />
+      {pathname !== '/checkout' && <NavBar items={NAV_ITEMS} dark={dark} />}
     </>
   )
 }

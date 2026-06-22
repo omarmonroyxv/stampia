@@ -43,8 +43,9 @@ function PaymentOption({ id, label, description, icon, selected, onSelect }: {
   icon: React.ReactNode; selected: boolean; onSelect: () => void
 }) {
   return (
-    <button type="button" onClick={onSelect} className="w-full flex items-center gap-4 text-left transition-all"
+    <label className="w-full flex items-center gap-4 text-left transition-all cursor-pointer"
       style={{ padding: '14px 18px', borderRadius: 12, border: selected ? '2px solid #EC3A12' : '1.5px solid #D1D5DB', background: selected ? 'rgba(236,58,18,0.04)' : 'var(--bg)' }}>
+      <input type="radio" name="payment_method" value={id} checked={selected} onChange={onSelect} className="sr-only" />
       <div className="flex items-center justify-center shrink-0" style={{ minWidth: 40, padding: '0 8px', height: 40, borderRadius: 10, background: selected ? 'rgba(236,58,18,0.1)' : '#F3F4F6', color: selected ? '#EC3A12' : '#6B7280', transition: 'all .2s' }}>
         {icon}
       </div>
@@ -53,7 +54,7 @@ function PaymentOption({ id, label, description, icon, selected, onSelect }: {
         <p style={{ fontSize: '0.8125rem', color: '#6B7280', marginTop: 2 }}>{description}</p>
       </div>
       <div style={{ width: 20, height: 20, borderRadius: '50%', flexShrink: 0, border: selected ? '6px solid #EC3A12' : '2px solid #D1D5DB', transition: 'all .2s' }} />
-    </button>
+    </label>
   )
 }
 

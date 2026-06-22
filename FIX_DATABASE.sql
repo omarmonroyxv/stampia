@@ -6,6 +6,7 @@
 
 -- 1. Aplicamos los campos de envío a la tabla orders si no existen
 ALTER TABLE orders
+  ADD COLUMN IF NOT EXISTS shipping_mxn     numeric(10,2) NOT NULL DEFAULT 120,
   ADD COLUMN IF NOT EXISTS shipping_name    text,
   ADD COLUMN IF NOT EXISTS shipping_phone   text,
   ADD COLUMN IF NOT EXISTS shipping_street  text,

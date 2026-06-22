@@ -47,8 +47,8 @@ export interface ClipChargeResponse {
   raw: Record<string, unknown>
 }
 
-const CLIP_API_BASE = 'https://api-clip.clip.mx'  // producción
-// Para sandbox usar: 'https://api-clip.clip.mx' con las credenciales de sandbox
+const CLIP_API_BASE = 'https://api.payclip.com'  // producción
+// Para sandbox usar: 'https://api-sandbox.payclip.com' con las credenciales de sandbox
 
 function getHeaders() {
   const apiKey = process.env.CLIP_API_KEY
@@ -68,6 +68,20 @@ function getHeaders() {
  * Retorna la URL de pago (card) o los datos de referencia (OXXO/SPEI).
  */
 export async function createClipCharge(req: ClipChargeRequest): Promise<ClipChargeResponse> {
+  // MOCK FOR DEVELOPMENT: Bypass actual Clip API to allow testing the checkout flow
+  if (process.env.NODE_ENV === 'development') {
+    return {
+      id: 'mock_charge_' + Math.random().toString(36).substr(2, 9),
+      status: 'pending',
+      amount: req.amount,
+      paymentMethod: req.paymentMethod ?? 'card',
+      checkoutUrl: req.redirects?.success ?? 'http://localhost:3000',
+      oxxoReference: req.paymentMethod === 'oxxo' ? '1234567890123456' : undefined,
+      seiClabe: req.paymentMethod === 'spei' ? '646180111800000000' : undefined,
+      expiresAt: new Date(Date.now() + 86400000).toISOString(),
+      raw: { mock: true },
+    }
+  }
   const body: Record<string, unknown> = {
     amount: Number(req.amount.toFixed(2)),
     currency: req.currency ?? 'MXN',

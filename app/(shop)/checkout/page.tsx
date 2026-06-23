@@ -177,7 +177,13 @@ export default function CheckoutPage() {
     const result = await createOrder(items, shipping, paymentMethod, finalShipping)
     if ('error' in result) { setError(result.error); setLoading(false); return }
     clear()
-    if (paymentMethod === 'card' && result.checkoutUrl) { window.location.href = result.checkoutUrl; return }
+    
+    // Con la API /v2/checkout de Clip, SIEMPRE redirigimos al enlace generado sin importar el método
+    if (result.checkoutUrl) {
+      window.location.href = result.checkoutUrl
+      return
+    }
+    
     setPendingResult(result)
     setLoading(false)
   }
@@ -186,12 +192,7 @@ export default function CheckoutPage() {
     return (
       <div className="section-py">
         <div className="layout-container-narrow">
-          {pendingResult.paymentMethod === 'oxxo' && pendingResult.oxxoReference
-            ? <OxxoResult reference={pendingResult.oxxoReference} expiresAt={pendingResult.expiresAt} total={total} />
-            : pendingResult.paymentMethod === 'spei' && pendingResult.speiClabe
-            ? <SpeiResult clabe={pendingResult.speiClabe} expiresAt={pendingResult.expiresAt} total={total} />
-            : <p style={{ color: '#6B7280', textAlign: 'center', padding: '4rem 0' }}>Procesando tu pago...</p>
-          }
+          <p style={{ color: '#6B7280', textAlign: 'center', padding: '4rem 0' }}>Procesando tu pago o redirigiendo a Clip...</p>
           <div className="flex justify-center mt-8">
             <Link href="/orders" className="mk-btn mk-btn-outline" style={{ padding: '12px 28px' }}>Ver mis pedidos</Link>
           </div>

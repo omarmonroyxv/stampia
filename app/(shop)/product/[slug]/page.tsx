@@ -42,9 +42,14 @@ export default async function ProductPage({ params }: Props) {
 
   // Ordenar variantes por talla
   const SIZE_ORDER = ['S', 'M', 'L', 'XL', 'XXL']
-  product.product_variants = [...product.product_variants].sort(
-    (a, b) => SIZE_ORDER.indexOf(a.size) - SIZE_ORDER.indexOf(b.size),
-  )
+  product.product_variants = [...product.product_variants].sort((a, b) => {
+    const ia = SIZE_ORDER.indexOf(a.size)
+    const ib = SIZE_ORDER.indexOf(b.size)
+    if (ia !== -1 && ib !== -1) return ia - ib
+    if (ia !== -1) return -1
+    if (ib !== -1) return 1
+    return a.size.localeCompare(b.size)
+  })
 
   const jsonLd = {
     '@context': 'https://schema.org',

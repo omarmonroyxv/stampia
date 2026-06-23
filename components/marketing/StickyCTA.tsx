@@ -31,11 +31,11 @@ export default function StickyCTA() {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 90, opacity: 0 }}
           transition={{ type: 'spring', stiffness: 260, damping: 26 }}
-          className="fixed left-1/2 z-40 -translate-x-1/2 bottom-5 sm:bottom-20"
-          style={{ width: 'min(92vw, 560px)' }}
+          className="fixed z-40 right-5 sm:left-1/2 sm:-translate-x-1/2 bottom-20 sm:bottom-10 pointer-events-none flex justify-end sm:justify-center"
+          style={{ width: '100%', maxWidth: '100vw' }}
         >
           <div
-            className="flex items-center gap-3 sm:gap-4 rounded-2xl"
+            className="flex items-center gap-3 sm:gap-4 rounded-2xl pointer-events-auto mx-4 sm:mx-0"
             style={{ padding: '12px 12px 12px 20px', background: 'rgba(20,17,14,0.86)', backdropFilter: 'blur(14px)', border: '1px solid rgba(255,255,255,0.12)', boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.12), 0 24px 50px -16px rgba(20,17,14,0.5)' }}
           >
             <span className="flex-shrink-0">

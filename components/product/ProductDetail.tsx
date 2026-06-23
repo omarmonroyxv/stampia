@@ -43,12 +43,21 @@ export default function ProductDetail({ product }: { product: ProductWithVariant
   const [showSizeGuide, setShowSizeGuide] = useState(false)
   const [qty, setQty] = useState(1)
 
-  const availableSizes = useMemo(
-    () => SIZE_ORDER.filter((s) =>
-      product.product_variants.some((v) => v.color_hex === selectedColor.hex && v.size === s),
-    ),
-    [product.product_variants, selectedColor],
-  )
+  const availableSizes = useMemo(() => {
+    const sizes = Array.from(new Set(
+      product.product_variants
+        .filter((v) => v.color_hex === selectedColor.hex)
+        .map((v) => v.size)
+    ))
+    return sizes.sort((a, b) => {
+      const ia = SIZE_ORDER.indexOf(a)
+      const ib = SIZE_ORDER.indexOf(b)
+      if (ia !== -1 && ib !== -1) return ia - ib
+      if (ia !== -1) return -1
+      if (ib !== -1) return 1
+      return a.localeCompare(b)
+    })
+  }, [product.product_variants, selectedColor])
 
   const selectedVariant = useMemo(
     () => selectedSize

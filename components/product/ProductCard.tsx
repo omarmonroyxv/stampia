@@ -30,7 +30,7 @@ export default function ProductCard({ product }: { product: ProductWithVariants 
             <img 
               src={product.mockup_front_url} 
               alt={product.name}
-              style={{ width: 220, height: 220, objectFit: 'contain', filter: 'drop-shadow(0 12px 24px rgba(0,0,0,0.08))' }}
+              style={{ width: '100%', height: 'auto', maxHeight: 260, objectFit: 'contain', filter: 'drop-shadow(0 12px 24px rgba(0,0,0,0.08))' }}
             />
           ) : (
             <MockupPlayera

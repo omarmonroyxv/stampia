@@ -137,6 +137,28 @@ export default async function HomePage() {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'LocalBusiness',
+            name: 'Stampia',
+            url: 'https://stampia.shop',
+            logo: 'https://stampia.shop/reallogo.png',
+            description: 'Taller de impresión de playeras y artículos personalizados bajo demanda (Print on Demand) en México.',
+            priceRange: '$$',
+            address: {
+              '@type': 'PostalAddress',
+              addressCountry: 'MX'
+            },
+            sameAs: [
+              'https://instagram.com/stampia.shop',
+              'https://facebook.com/stampia.shop'
+            ]
+          }),
+        }}
+      />
       <GlassmorphismTrustHero />
       <SpecMarquee />
       <BeforeAfter />

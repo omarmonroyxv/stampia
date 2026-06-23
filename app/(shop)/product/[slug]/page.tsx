@@ -46,8 +46,27 @@ export default async function ProductPage({ params }: Props) {
     (a, b) => SIZE_ORDER.indexOf(a.size) - SIZE_ORDER.indexOf(b.size),
   )
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: product.name,
+    description: product.description ?? '',
+    image: product.mockup_front_url ? `https://stampia.shop${product.mockup_front_url}` : undefined,
+    offers: {
+      '@type': 'Offer',
+      price: product.base_price_mxn,
+      priceCurrency: 'MXN',
+      availability: product.active ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+      url: `https://stampia.shop/product/${product.slug}`,
+    },
+  }
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* Breadcrumb */}
       <div style={{ borderBottom: '1px solid var(--color-border)', background: 'var(--color-surface)' }}>
         <div className="layout-container py-3">

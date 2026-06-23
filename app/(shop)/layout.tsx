@@ -17,7 +17,7 @@ export default async function ShopLayout({ children }: { children: React.ReactNo
       {/* Footer */}
       <footer className="mk-ink-section relative overflow-hidden" style={{ paddingTop: 56, paddingBottom: 40 }}>
         <div className="layout-container">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-[1.4fr_1fr_1fr] gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-[1.4fr_1fr_1fr_1fr] gap-8">
             <div>
               <div className="mb-4">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -40,6 +40,15 @@ export default async function ShopLayout({ children }: { children: React.ReactNo
               <div className="flex flex-col gap-2.5">
                 <Link href="/orders" style={{ fontSize: '0.9375rem', color: 'rgba(255,255,255,0.62)', textDecoration: 'none' }}>Mis órdenes</Link>
                 <Link href="/login" style={{ fontSize: '0.9375rem', color: 'rgba(255,255,255,0.62)', textDecoration: 'none' }}>Iniciar sesión</Link>
+              </div>
+            </div>
+            <div>
+              <p className="mk-spec mb-4">Legal</p>
+              <div className="flex flex-col gap-2.5">
+                <Link href="/terminos" style={{ fontSize: '0.9375rem', color: 'rgba(255,255,255,0.62)', textDecoration: 'none' }}>Términos y Condiciones</Link>
+                <Link href="/privacidad" style={{ fontSize: '0.9375rem', color: 'rgba(255,255,255,0.62)', textDecoration: 'none' }}>Aviso de Privacidad</Link>
+                <Link href="/envios" style={{ fontSize: '0.9375rem', color: 'rgba(255,255,255,0.62)', textDecoration: 'none' }}>Políticas de Envío</Link>
+                <Link href="/reembolsos" style={{ fontSize: '0.9375rem', color: 'rgba(255,255,255,0.62)', textDecoration: 'none' }}>Devoluciones</Link>
               </div>
             </div>
           </div>

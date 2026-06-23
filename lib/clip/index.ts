@@ -47,12 +47,9 @@ export interface ClipChargeResponse {
   raw: Record<string, unknown>
 }
 
-const isClipProd = process.env.CLIP_ENV === 'production' || 
-                   (!process.env.CLIP_ENV && process.env.NODE_ENV === 'production')
-
-const CLIP_API_BASE = isClipProd 
-  ? 'https://api.payclip.com' 
-  : 'https://api-sandbox.payclip.com'
+// api-sandbox.payclip.com no existe — siempre usar api.payclip.com
+// Las mismas llaves funcionan para pruebas y producción en Clip
+const CLIP_API_BASE = 'https://api.payclip.com'
 
 function getHeaders() {
   const apiKey = process.env.CLIP_API_KEY

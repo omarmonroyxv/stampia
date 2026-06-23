@@ -65,10 +65,16 @@ function getHeaders() {
 }
 
 export async function createClipCharge(req: ClipChargeRequest): Promise<ClipChargeResponse> {
-  const paymentMethodTypes = []
-  if (req.paymentMethod === 'card') paymentMethodTypes.push('card')
-  if (req.paymentMethod === 'oxxo') paymentMethodTypes.push('cash')
-  if (req.paymentMethod === 'spei') paymentMethodTypes.push('transfer')
+  // Valores correctos según la API de Clip: credit|debit|cash|bank_transfer|wallet
+  let paymentMethodTypes: string[]
+  if (req.paymentMethod === 'oxxo') {
+    paymentMethodTypes = ['cash']
+  } else if (req.paymentMethod === 'spei') {
+    paymentMethodTypes = ['bank_transfer']
+  } else {
+    // card — aceptar crédito y débito
+    paymentMethodTypes = ['credit', 'debit']
+  }
 
   const body: Record<string, unknown> = {
     amount: Number(req.amount.toFixed(2)),
@@ -83,7 +89,7 @@ export async function createClipCharge(req: ClipChargeRequest): Promise<ClipChar
       orderId: req.orderId,
     },
     custom_payment_options: {
-      payment_method_types: paymentMethodTypes.length > 0 ? paymentMethodTypes : ['card', 'cash', 'transfer']
+      payment_method_types: paymentMethodTypes
     }
   }
 

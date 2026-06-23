@@ -24,11 +24,20 @@ export default function ProductCard({ product }: { product: ProductWithVariants 
         style={{ minHeight: '300px' }}
       >
         <div className="absolute inset-0 mk-dotgrid opacity-30 pointer-events-none" />
-        <div className="relative z-10 transition-transform duration-500 group-hover:scale-105 will-change-transform">
-          <MockupPlayera
-            color={firstColor?.color_hex ?? '#f0ece8'}
-            style={{ width: 220, filter: 'drop-shadow(0 12px 24px rgba(0,0,0,0.08))' }}
-          />
+        <div className="relative z-10 transition-transform duration-500 group-hover:scale-105 will-change-transform flex justify-center w-full">
+          {product.mockup_front_url ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img 
+              src={product.mockup_front_url} 
+              alt={product.name}
+              style={{ width: 220, height: 220, objectFit: 'contain', filter: 'drop-shadow(0 12px 24px rgba(0,0,0,0.08))' }}
+            />
+          ) : (
+            <MockupPlayera
+              color={firstColor?.color_hex ?? '#f0ece8'}
+              style={{ width: 220, filter: 'drop-shadow(0 12px 24px rgba(0,0,0,0.08))' }}
+            />
+          )}
         </div>
       </div>
 

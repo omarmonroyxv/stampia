@@ -45,7 +45,12 @@ export default function CartPage() {
                     className="w-20 h-20 rounded-xl flex-shrink-0 flex items-center justify-center"
                     style={{ background: 'var(--color-bg)', border: '1px solid var(--color-border)' }}
                   >
-                    <MockupPlayera color={item.colorHex} style={{ width: 60 }} />
+                    {item.mockupFrontUrl ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img src={item.mockupFrontUrl} alt={item.productName} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+                    ) : (
+                      <MockupPlayera color={item.colorHex} style={{ width: 60 }} />
+                    )}
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="font-sans font-semibold text-sm mb-0.5">{item.productName}</p>

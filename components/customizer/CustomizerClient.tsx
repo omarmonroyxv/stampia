@@ -231,6 +231,7 @@ export default function CustomizerClient({ userId, variant }: Props) {
             <CustomizerCanvas
               ref={canvasRef}
               colorHex={variant.color_hex}
+              mockupUrl={product.mockup_front_url}
               printArea={printArea}
               designUrl={design?.signedUrl ?? null}
               onPlacementChange={handlePlacementChange}

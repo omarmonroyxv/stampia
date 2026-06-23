@@ -23,6 +23,7 @@ export interface CustomizerCanvasHandle {
 
 interface Props {
   colorHex:            string
+  mockupUrl?:          string | null
   printArea:           PrintArea
   designUrl:           string | null
   initialPlacement?:   Placement
@@ -93,7 +94,7 @@ function buildMockupBg(colorHex: string): string {
 }
 
 const CustomizerCanvas = forwardRef<CustomizerCanvasHandle, Props>(function CustomizerCanvas(
-  { colorHex, printArea, designUrl, initialPlacement, onPlacementChange, onObjectsChange },
+  { colorHex, mockupUrl, printArea, designUrl, initialPlacement, onPlacementChange, onObjectsChange },
   ref,
 ) {
   const containerRef    = useRef<HTMLDivElement>(null)
@@ -110,7 +111,10 @@ const CustomizerCanvas = forwardRef<CustomizerCanvasHandle, Props>(function Cust
   onObjectsRef.current   = onObjectsChange
   printAreaRef.current   = printArea
 
-  const bgImage = useMemo(() => buildMockupBg(colorHex), [colorHex])
+  const bgImage = useMemo(() => {
+    if (mockupUrl) return `url("${mockupUrl}")`
+    return buildMockupBg(colorHex)
+  }, [colorHex, mockupUrl])
 
   function countUserObjects(): number {
     const canvas = fabricRef.current

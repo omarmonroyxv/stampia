@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { Store, Landmark, Package, CreditCard, Lock, MapPin, Truck, ShoppingBag } from 'lucide-react'
@@ -150,13 +150,15 @@ export default function CheckoutPage() {
   const finalShipping = shippingCost ?? 120 // Fallback visual
   const total = subtotal + finalShipping
 
+  const isRedirectingRef = useRef(false)
+
   useEffect(() => {
-    if (items.length === 0 && !pendingResult) {
+    if (items.length === 0 && !pendingResult && !isRedirectingRef.current) {
       router.replace('/cart')
     }
   }, [items.length, pendingResult, router])
 
-  if (items.length === 0 && !pendingResult) return null
+  if (items.length === 0 && !pendingResult && !isRedirectingRef.current) return null
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -176,14 +178,17 @@ export default function CheckoutPage() {
     }
     const result = await createOrder(items, shipping, paymentMethod, finalShipping)
     if ('error' in result) { setError(result.error); setLoading(false); return }
-    clear()
+    
+    isRedirectingRef.current = true
     
     // Con la API /v2/checkout de Clip, SIEMPRE redirigimos al enlace generado sin importar el método
     if (result.checkoutUrl) {
+      clear()
       window.location.href = result.checkoutUrl
       return
     }
     
+    clear()
     setPendingResult(result)
     setLoading(false)
   }
@@ -297,8 +302,13 @@ export default function CheckoutPage() {
               <div className="flex flex-col gap-4">
                 {items.map((item) => (
                   <div key={item.variantId + (item.designUrl ?? '')} className="flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-xl flex-shrink-0 flex items-center justify-center" style={{ background: '#F3F4F6', border: '1px solid #E5E7EB' }}>
-                      <MockupPlayera color={item.colorHex} style={{ width: 32 }} />
+                    <div className="w-12 h-12 rounded-xl flex-shrink-0 flex items-center justify-center" style={{ background: '#F3F4F6', border: '1px solid #E5E7EB', overflow: 'hidden' }}>
+                      {item.mockupFrontUrl ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img src={item.mockupFrontUrl} alt={item.productName} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+                      ) : (
+                        <MockupPlayera color={item.colorHex} style={{ width: 32 }} />
+                      )}
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-semibold truncate" style={{ color: 'var(--ink)' }}>{item.productName}</p>

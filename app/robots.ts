@@ -5,7 +5,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: ['/dashboard/', '/api/'],
+      disallow: ['/admin/', '/api/', '/checkout', '/cart', '/customize/'],
     },
     sitemap: 'https://stampia.shop/sitemap.xml',
   }

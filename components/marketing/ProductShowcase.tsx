@@ -55,16 +55,16 @@ export default function ProductShowcase({ products }: { products: ProductWithVar
                 <motion.div key={p.id} variants={item}>
                   <TiltCard style={{ borderRadius: 12 }}>
                   <Link href={`/product/${p.slug}`} className="mk-prodcard group block overflow-hidden rounded-xl">
-                    <div className="relative flex items-center justify-center overflow-hidden" style={{ background: 'var(--paper-2)', minHeight: 280, padding: 28 }}>
+                    <div className="relative flex items-center justify-center overflow-hidden" style={{ background: 'var(--paper-2)', minHeight: 280, padding: 16 }}>
                       <div className="mk-halftone-cinnabar absolute inset-0 opacity-0 group-hover:opacity-[0.13] transition-opacity duration-500" />
-                      <div className="mk-print-area mk-march absolute" style={{ inset: 26, opacity: 0.32 }} />
+                      <div className="mk-print-area mk-march absolute" style={{ inset: 16, opacity: 0.32 }} />
                       <CornerMarks />
-                      <div className="transition-transform duration-500 ease-[cubic-bezier(.16,1,.3,1)] group-hover:scale-[1.06] group-hover:-rotate-2 w-full flex justify-center" style={{ willChange: 'transform' }}>
+                      <div className="transition-transform duration-500 ease-[cubic-bezier(.16,1,.3,1)] group-hover:scale-[1.06] group-hover:-rotate-2 w-full h-full flex justify-center items-center" style={{ willChange: 'transform' }}>
                         {p.mockup_front_url ? (
                           // eslint-disable-next-line @next/next/no-img-element
-                          <img src={p.mockup_front_url} alt={p.name} style={{ width: 195, height: 195, objectFit: 'contain', filter: 'drop-shadow(0 12px 24px rgba(0,0,0,0.08))' }} />
+                          <img src={p.mockup_front_url} alt={p.name} style={{ width: '100%', height: '100%', maxHeight: 240, objectFit: 'contain', filter: 'drop-shadow(0 12px 24px rgba(0,0,0,0.08))' }} />
                         ) : (
-                          <MockupPlayera color={colors[0]?.color_hex ?? '#f0ece8'} style={{ width: 195, filter: 'drop-shadow(0 12px 24px rgba(0,0,0,0.08))' }} />
+                          <MockupPlayera color={colors[0]?.color_hex ?? '#f0ece8'} style={{ width: '100%', height: '100%', maxHeight: 240, filter: 'drop-shadow(0 12px 24px rgba(0,0,0,0.08))' }} />
                         )}
                       </div>
                     </div>

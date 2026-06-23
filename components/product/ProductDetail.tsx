@@ -108,18 +108,18 @@ export default function ProductDetail({ product }: { product: ProductWithVariant
             DTF
           </div>
 
-          <div className="animate-scale-reveal is-visible p-10 w-full flex items-center justify-center">
+          <div className="animate-scale-reveal is-visible p-4 sm:p-8 w-full flex items-center justify-center">
             {product.mockup_front_url ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img 
                 src={product.mockup_front_url} 
                 alt={product.name}
-                style={{ width: '100%', maxWidth: '320px', objectFit: 'contain', filter: 'drop-shadow(0 12px 24px rgba(0,0,0,0.08))' }}
+                style={{ width: '100%', height: '100%', maxHeight: 400, objectFit: 'contain', filter: 'drop-shadow(0 12px 24px rgba(0,0,0,0.08))' }}
               />
             ) : (
               <MockupPlayera
                 color={selectedColor.hex}
-                className="w-full max-w-[320px]"
+                style={{ width: '100%', height: '100%', maxHeight: 400 }}
               />
             )}
           </div>

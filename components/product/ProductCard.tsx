@@ -20,7 +20,7 @@ export default function ProductCard({ product }: { product: ProductWithVariants 
 
       {/* Mockup */}
       <div
-        className="relative flex items-center justify-center p-8 overflow-hidden"
+        className="relative flex items-center justify-center p-4 overflow-hidden"
         style={{ minHeight: '300px' }}
       >
         <div className="absolute inset-0 mk-dotgrid opacity-30 pointer-events-none" />
@@ -30,7 +30,7 @@ export default function ProductCard({ product }: { product: ProductWithVariants 
             <img 
               src={product.mockup_front_url} 
               alt={product.name}
-              style={{ width: '100%', height: 'auto', maxHeight: 260, objectFit: 'contain', filter: 'drop-shadow(0 12px 24px rgba(0,0,0,0.08))' }}
+              style={{ width: '100%', height: '100%', maxHeight: 300, objectFit: 'contain', filter: 'drop-shadow(0 12px 24px rgba(0,0,0,0.08))' }}
             />
           ) : (
             <MockupPlayera

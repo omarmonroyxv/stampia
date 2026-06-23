@@ -31,4 +31,4 @@ export interface ColorOption {
 }
 
 export const SIZE_ORDER = ['S', 'M', 'L', 'XL', 'XXL'] as const
-export type Size = (typeof SIZE_ORDER)[number]
+export type Size = string

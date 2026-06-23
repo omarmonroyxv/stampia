@@ -50,8 +50,8 @@ export default function ProductDetail({ product }: { product: ProductWithVariant
         .map((v) => v.size)
     ))
     return sizes.sort((a, b) => {
-      const ia = SIZE_ORDER.indexOf(a)
-      const ib = SIZE_ORDER.indexOf(b)
+      const ia = (SIZE_ORDER as readonly string[]).indexOf(a)
+      const ib = (SIZE_ORDER as readonly string[]).indexOf(b)
       if (ia !== -1 && ib !== -1) return ia - ib
       if (ia !== -1) return -1
       if (ib !== -1) return 1

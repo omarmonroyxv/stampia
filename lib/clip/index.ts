@@ -47,7 +47,10 @@ export interface ClipChargeResponse {
   raw: Record<string, unknown>
 }
 
-const CLIP_API_BASE = process.env.NODE_ENV === 'production' 
+const isClipProd = process.env.CLIP_ENV === 'production' || 
+                   (!process.env.CLIP_ENV && process.env.NODE_ENV === 'production')
+
+const CLIP_API_BASE = isClipProd 
   ? 'https://api.payclip.com' 
   : 'https://api-sandbox.payclip.com'
 

@@ -1,6 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
 import ProductCard from '@/components/product/ProductCard'
-import AnimateOnScroll from '@/components/ui/AnimateOnScroll'
 import type { ProductWithVariants } from '@/types/product'
 
 export const revalidate = 60
@@ -30,7 +29,7 @@ export default async function CatalogPage() {
       <section className="relative overflow-hidden pt-32 pb-24 mk-wash">
         <div className="absolute inset-0 mk-dotgrid opacity-40 pointer-events-none" />
         <div className="layout-container relative z-10 text-center max-w-3xl mx-auto">
-          <AnimateOnScroll>
+          <div>
             <p className="mk-spec mb-4 justify-center">Catálogo Premium</p>
             <h1 className="mk-display text-5xl md:text-6xl mb-6">
               Todos los productos.
@@ -43,7 +42,7 @@ export default async function CatalogPage() {
                 {products.length} producto{products.length !== 1 ? 's' : ''} disponible{products.length !== 1 ? 's' : ''}
               </span>
             </div>
-          </AnimateOnScroll>
+          </div>
         </div>
       </section>
 
@@ -73,9 +72,13 @@ export default async function CatalogPage() {
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {products.map((product, i) => (
-                <AnimateOnScroll key={product.id} delay={i % 3}>
+                <div
+                  key={product.id}
+                  className="animate-fade-up is-visible"
+                  style={{ '--i': String(i % 3) } as React.CSSProperties}
+                >
                   <ProductCard product={product} />
-                </AnimateOnScroll>
+                </div>
               ))}
             </div>
           )}

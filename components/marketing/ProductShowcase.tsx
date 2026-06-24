@@ -5,25 +5,7 @@ import { motion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
 import MockupPlayera from '@/components/ui/MockupPlayera'
 import { Reveal, stagger, item, VIEWPORT } from './motion-primitives'
-import TiltCard from './TiltCard'
 import type { ProductWithVariants } from '@/types/product'
-
-function CornerMarks() {
-  const c = [
-    { top: 10, left: 10 }, { top: 10, right: 10 },
-    { bottom: 10, left: 10 }, { bottom: 10, right: 10 },
-  ]
-  return (
-    <>
-      {c.map((pos, i) => (
-        <span key={i} className="absolute opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" style={{ color: 'var(--cinnabar)', ...pos }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/nuevofavi.png" alt="" width={13} height={13} aria-hidden="true" style={{ display: 'block', objectFit: 'contain' }} />
-        </span>
-      ))}
-    </>
-  )
-}
 
 export default function ProductShowcase({ products }: { products: ProductWithVariants[] }) {
   return (
@@ -53,59 +35,59 @@ export default function ProductShowcase({ products }: { products: ProductWithVar
               const colors = [...new Map(p.product_variants.map((v) => [v.color_hex, v])).values()]
               return (
                 <motion.div key={p.id} variants={item}>
-                  <TiltCard style={{ borderRadius: 12 }}>
-                    {/* The Link must be directly inside TiltCard so the glow overlay (pointer-events:none) doesn't block it */}
-                    <Link href={`/product/${p.slug}`} className="mk-prodcard group block overflow-hidden rounded-xl">
-                      {/* Square image box */}
-                      <div
-                        className="relative overflow-hidden"
-                        style={{ aspectRatio: '1 / 1', background: 'var(--paper-2)' }}
-                      >
-                        <div className="mk-halftone-cinnabar absolute inset-0 opacity-0 group-hover:opacity-[0.13] transition-opacity duration-500 pointer-events-none" />
-                        <div className="mk-print-area mk-march absolute pointer-events-none" style={{ inset: 16, opacity: 0.32 }} />
-                        <CornerMarks />
-                        {/* Image fills the full box */}
-                        <div className="absolute inset-0 flex items-center justify-center p-4 transition-transform duration-500 ease-[cubic-bezier(.16,1,.3,1)] group-hover:scale-[1.06] group-hover:-rotate-1" style={{ willChange: 'transform' }}>
-                          {p.mockup_front_url ? (
-                            // eslint-disable-next-line @next/next/no-img-element
-                            <img
-                              src={p.mockup_front_url}
-                              alt={p.name}
-                              style={{
-                                width: '100%',
-                                height: '100%',
-                                objectFit: 'contain',
-                                filter: 'drop-shadow(0 12px 24px rgba(0,0,0,0.10))',
-                              }}
-                            />
-                          ) : (
-                            <MockupPlayera
-                              color={colors[0]?.color_hex ?? '#f0ece8'}
-                              style={{ width: '100%', height: '100%', filter: 'drop-shadow(0 12px 24px rgba(0,0,0,0.10))' }}
-                            />
-                          )}
-                        </div>
+                  {/* Simple Link card — no TiltCard wrapper to avoid 3D transform click issues */}
+                  <Link
+                    href={`/product/${p.slug}`}
+                    className="mk-prodcard group block overflow-hidden rounded-xl"
+                    style={{ borderRadius: 12, transition: 'transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s ease' }}
+                  >
+                    {/* Square image box */}
+                    <div
+                      className="relative overflow-hidden"
+                      style={{ aspectRatio: '1 / 1', background: 'var(--paper-2)' }}
+                    >
+                      <div className="mk-halftone-cinnabar absolute inset-0 opacity-0 group-hover:opacity-[0.13] transition-opacity duration-500 pointer-events-none" />
+                      {/* Image fills the full box */}
+                      <div className="absolute inset-0 flex items-center justify-center p-6 transition-transform duration-500 ease-[cubic-bezier(.16,1,.3,1)] group-hover:scale-[1.06]" style={{ willChange: 'transform' }}>
+                        {p.mockup_front_url ? (
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img
+                            src={p.mockup_front_url}
+                            alt={p.name}
+                            style={{
+                              width: '100%',
+                              height: '100%',
+                              objectFit: 'contain',
+                              filter: 'drop-shadow(0 12px 24px rgba(0,0,0,0.10))',
+                            }}
+                          />
+                        ) : (
+                          <MockupPlayera
+                            color={colors[0]?.color_hex ?? '#f0ece8'}
+                            style={{ width: '100%', height: '100%', filter: 'drop-shadow(0 12px 24px rgba(0,0,0,0.10))' }}
+                          />
+                        )}
                       </div>
+                    </div>
 
-                      <div className="p-5" style={{ borderTop: '1.5px solid var(--line)' }}>
-                        <div className="flex items-start justify-between gap-2 mb-3">
-                          <h3 className="flex items-center gap-1.5" style={{ fontFamily: 'var(--font-public)', fontWeight: 700, fontSize: '1rem', color: 'var(--ink)' }}>
-                            {p.name}
-                            <ArrowRight size={15} strokeWidth={2.5} className="opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" style={{ color: 'var(--cinnabar)' }} />
-                          </h3>
-                          <span className="mk-mono" style={{ fontSize: '0.875rem', fontWeight: 700, color: 'var(--cinnabar)', flexShrink: 0 }}>
-                            ${Number(p.base_price_mxn).toFixed(0)}
-                          </span>
-                        </div>
-                        <div className="flex items-center gap-1.5">
-                          {colors.slice(0, 5).map((v) => (
-                            <span key={v.color_hex} title={v.color_name} style={{ width: 15, height: 15, borderRadius: '50%', background: v.color_hex, border: '1.5px solid var(--line)' }} />
-                          ))}
-                          {colors.length > 5 && <span className="mk-mono" style={{ fontSize: '0.6875rem', color: 'var(--faint)' }}>+{colors.length - 5}</span>}
-                        </div>
+                    <div className="p-5" style={{ borderTop: '1.5px solid var(--line)' }}>
+                      <div className="flex items-start justify-between gap-2 mb-3">
+                        <h3 className="flex items-center gap-1.5" style={{ fontFamily: 'var(--font-public)', fontWeight: 700, fontSize: '1rem', color: 'var(--ink)' }}>
+                          {p.name}
+                          <ArrowRight size={15} strokeWidth={2.5} className="opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" style={{ color: 'var(--cinnabar)' }} />
+                        </h3>
+                        <span className="mk-mono" style={{ fontSize: '0.875rem', fontWeight: 700, color: 'var(--cinnabar)', flexShrink: 0 }}>
+                          ${Number(p.base_price_mxn).toFixed(0)}
+                        </span>
                       </div>
-                    </Link>
-                  </TiltCard>
+                      <div className="flex items-center gap-1.5">
+                        {colors.slice(0, 5).map((v) => (
+                          <span key={v.color_hex} title={v.color_name} style={{ width: 15, height: 15, borderRadius: '50%', background: v.color_hex, border: '1.5px solid var(--line)' }} />
+                        ))}
+                        {colors.length > 5 && <span className="mk-mono" style={{ fontSize: '0.6875rem', color: 'var(--faint)' }}>+{colors.length - 5}</span>}
+                      </div>
+                    </div>
+                  </Link>
                 </motion.div>
               )
             })}

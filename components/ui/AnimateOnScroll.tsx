@@ -15,7 +15,7 @@ export default function AnimateOnScroll({
   className = '',
   animation = 'fade-up',
   delay = 0,
-  threshold = 0.15,
+  threshold = 0.05,
 }: Props) {
   const ref = useRef<HTMLDivElement>(null)
 
@@ -24,6 +24,13 @@ export default function AnimateOnScroll({
     if (!el) return
 
     el.style.setProperty('--i', String(delay))
+
+    // Add is-visible immediately for above-the-fold elements
+    const rect = el.getBoundingClientRect()
+    if (rect.top < window.innerHeight) {
+      el.classList.add('is-visible')
+      return
+    }
 
     const observer = new IntersectionObserver(
       ([entry]) => {

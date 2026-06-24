@@ -71,18 +71,17 @@ body {
 
 .animate-fade-up {
   opacity: 0;
-  transform: translateY(24px);
+  /* No transform here so click targets stay aligned with visual position */
   transition: none;
 }
 
 .animate-fade-up.is-visible {
   animation: fade-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  animation-delay: calc(var(--i, 0) * 0.1s);
+  animation-delay: calc(var(--i, 0) * 0.08s);
 }
 
 .animate-scale-reveal {
   opacity: 0;
-  transform: scale(0.96);
 }
 
 .animate-scale-reveal.is-visible {

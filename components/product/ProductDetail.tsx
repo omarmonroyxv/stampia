@@ -6,7 +6,6 @@ import { Printer, Package, CheckCircle2, Palette, Zap } from 'lucide-react'
 import type { ProductWithVariants, ColorOption, Size } from '@/types/product'
 import { SIZE_ORDER } from '@/types/product'
 import MockupPlayera from '@/components/ui/MockupPlayera'
-import AnimateOnScroll from '@/components/ui/AnimateOnScroll'
 
 function uniqueColors(variants: ProductWithVariants['product_variants']): ColorOption[] {
   const seen = new Set<string>()
@@ -183,7 +182,7 @@ export default function ProductDetail({ product }: { product: ProductWithVariant
       </div>
 
       {/* ── RIGHT: Info + selectors ── */}
-      <AnimateOnScroll>
+      <div>
         {/* Category label */}
         <p className="mk-spec mb-3">Playera personalizada</p>
 
@@ -398,7 +397,7 @@ export default function ProductDetail({ product }: { product: ProductWithVariant
             </div>
           ))}
         </div>
-      </AnimateOnScroll>
+      </div>
     </div>
   )
 }

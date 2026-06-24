@@ -18,24 +18,29 @@ export default function ProductCard({ product }: { product: ProductWithVariants 
       <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
            style={{ background: 'radial-gradient(circle at 50% 0%, rgba(236,58,18,0.08), transparent 70%)' }} />
 
-      {/* Mockup */}
+      {/* Mockup image container — square aspect ratio so image always fills the box */}
       <div
-        className="relative flex items-center justify-center p-4 overflow-hidden"
-        style={{ minHeight: '300px' }}
+        className="relative overflow-hidden"
+        style={{ aspectRatio: '1 / 1', background: 'var(--paper-2)' }}
       >
         <div className="absolute inset-0 mk-dotgrid opacity-30 pointer-events-none" />
-        <div className="relative z-10 transition-transform duration-500 group-hover:scale-105 will-change-transform flex justify-center w-full">
+        <div className="absolute inset-0 flex items-center justify-center p-4 transition-transform duration-500 group-hover:scale-105 will-change-transform">
           {product.mockup_front_url ? (
             // eslint-disable-next-line @next/next/no-img-element
-            <img 
-              src={product.mockup_front_url} 
+            <img
+              src={product.mockup_front_url}
               alt={product.name}
-              style={{ width: '100%', height: '100%', maxHeight: 300, objectFit: 'contain', filter: 'drop-shadow(0 12px 24px rgba(0,0,0,0.08))' }}
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'contain',
+                filter: 'drop-shadow(0 12px 24px rgba(0,0,0,0.10))',
+              }}
             />
           ) : (
             <MockupPlayera
               color={firstColor?.color_hex ?? '#f0ece8'}
-              style={{ width: 220, filter: 'drop-shadow(0 12px 24px rgba(0,0,0,0.08))' }}
+              style={{ width: '100%', height: '100%', filter: 'drop-shadow(0 12px 24px rgba(0,0,0,0.10))' }}
             />
           )}
         </div>

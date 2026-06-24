@@ -51,7 +51,18 @@ export default function TiltCard({
       style={{ ...style, rotateX: rx, rotateY: ry, transformStyle: 'preserve-3d', transformPerspective: 1000, position: 'relative' }}
     >
       {children}
-      <motion.span aria-hidden="true" style={{ position: 'absolute', inset: 0, borderRadius: 'inherit', pointerEvents: 'none', background: glow, zIndex: 5 }} />
+      {/* pointer-events: none ensures this overlay NEVER blocks clicks on the children */}
+      <motion.span
+        aria-hidden="true"
+        style={{
+          position: 'absolute',
+          inset: 0,
+          borderRadius: 'inherit',
+          pointerEvents: 'none',
+          background: glow,
+          zIndex: 10,
+        }}
+      />
     </motion.div>
   )
 }

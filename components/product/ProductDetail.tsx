@@ -38,8 +38,18 @@ export default function ProductDetail({ product }: { product: ProductWithVariant
   const router = useRouter()
   const colors = useMemo(() => uniqueColors(product.product_variants), [product.product_variants])
 
+  // Auto-select first available size for each color (key fix for mugs, tote bags etc.)
+  const getInitialSize = (colorHex: string): Size | null => {
+    const sizes = Array.from(new Set(
+      product.product_variants
+        .filter(v => v.color_hex === colorHex)
+        .map(v => v.size)
+    ))
+    return sizes.length === 1 ? sizes[0] as Size : null
+  }
+
   const [selectedColor, setSelectedColor] = useState<ColorOption>(colors[0]!)
-  const [selectedSize, setSelectedSize] = useState<Size | null>(null)
+  const [selectedSize, setSelectedSize] = useState<Size | null>(() => getInitialSize(colors[0]?.hex ?? ''))
   const [showSizeGuide, setShowSizeGuide] = useState(false)
   const [qty, setQty] = useState(1)
 
@@ -71,7 +81,13 @@ export default function ProductDetail({ product }: { product: ProductWithVariant
 
   function handleColorSelect(c: ColorOption) {
     setSelectedColor(c)
-    setSelectedSize(null)
+    // Auto-select if only one size for this color
+    const sizesForColor = Array.from(new Set(
+      product.product_variants
+        .filter(v => v.color_hex === c.hex)
+        .map(v => v.size)
+    ))
+    setSelectedSize(sizesForColor.length === 1 ? sizesForColor[0] as Size : null)
   }
 
   return (
@@ -108,18 +124,21 @@ export default function ProductDetail({ product }: { product: ProductWithVariant
             DTF
           </div>
 
-          <div className="animate-scale-reveal is-visible p-4 sm:p-8 w-full flex items-center justify-center">
+          {/* Image fills the 1:1 aspect-ratio box using absolute positioning */}
+          <div className="absolute inset-4 sm:inset-8 flex items-center justify-center">
             {product.mockup_front_url ? (
               // eslint-disable-next-line @next/next/no-img-element
-              <img 
-                src={product.mockup_front_url} 
+              <img
+                src={product.mockup_front_url}
                 alt={product.name}
-                style={{ width: '100%', height: '100%', maxHeight: 400, objectFit: 'contain', filter: 'drop-shadow(0 12px 24px rgba(0,0,0,0.08))' }}
+                className="animate-scale-reveal is-visible"
+                style={{ width: '100%', height: '100%', objectFit: 'contain', filter: 'drop-shadow(0 12px 24px rgba(0,0,0,0.08))' }}
               />
             ) : (
               <MockupPlayera
                 color={selectedColor.hex}
-                style={{ width: '100%', height: '100%', maxHeight: 400 }}
+                className="animate-scale-reveal is-visible"
+                style={{ width: '100%', height: '100%' }}
               />
             )}
           </div>
@@ -229,78 +248,80 @@ export default function ProductDetail({ product }: { product: ProductWithVariant
           {/* Divider */}
           <div style={{ borderTop: '1px solid var(--color-border)', marginBottom: '1.5rem' }} />
 
-          {/* Size selector */}
-          <div>
-            <div className="flex items-center justify-between mb-3">
-              <p className="label-sm">Talla</p>
-              <button
-                onClick={() => setShowSizeGuide(v => !v)}
-                className="text-xs font-medium underline underline-offset-2"
-                style={{ color: 'var(--color-brand)' }}
-              >
-                {showSizeGuide ? 'Ocultar guía' : 'Guía de tallas'}
-              </button>
-            </div>
-
-            {/* Size guide */}
-            {showSizeGuide && (
-              <div
-                className="mb-4 rounded-xl overflow-hidden text-xs"
-                style={{ border: '1px solid var(--color-border)' }}
-              >
-                <table className="w-full text-center">
-                  <thead>
-                    <tr style={{ background: 'var(--color-brand)', color: '#fff' }}>
-                      <th className="px-3 py-2 font-semibold">Talla</th>
-                      <th className="px-3 py-2 font-semibold">Pecho (cm)</th>
-                      <th className="px-3 py-2 font-semibold">Largo (cm)</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {SIZE_GUIDE.map((row, i) => (
-                      <tr
-                        key={row.size}
-                        style={{
-                          background: i % 2 === 0 ? 'var(--color-surface)' : 'transparent',
-                          color: 'var(--color-text)',
-                        }}
-                      >
-                        <td className="px-3 py-2 font-bold">{row.size}</td>
-                        <td className="px-3 py-2">{row.chest}</td>
-                        <td className="px-3 py-2">{row.length}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+          {/* Size selector — hidden if product only has one "size" that is already auto-selected */}
+          {availableSizes.length > 1 && (
+            <div>
+              <div className="flex items-center justify-between mb-3">
+                <p className="label-sm">Talla</p>
+                <button
+                  onClick={() => setShowSizeGuide(v => !v)}
+                  className="text-xs font-medium underline underline-offset-2"
+                  style={{ color: 'var(--color-brand)' }}
+                >
+                  {showSizeGuide ? 'Ocultar guía' : 'Guía de tallas'}
+                </button>
               </div>
-            )}
 
-            <div className="flex gap-2 flex-wrap">
-              {availableSizes.map(size => {
-                const active = selectedSize === size
-                return (
-                  <button
-                    key={size}
-                    onClick={() => setSelectedSize(size)}
-                    className="min-w-[52px] py-2.5 text-sm font-bold rounded-xl border transition-all duration-150 hover:scale-105"
-                    style={{
-                      borderColor: active ? 'var(--color-brand)' : 'var(--color-border)',
-                      background: active ? 'var(--color-brand)' : 'var(--color-surface)',
-                      color: active ? '#fff' : 'var(--color-text)',
-                      boxShadow: active ? '0 4px 12px rgba(236,58,18,0.25)' : 'none',
-                    }}
-                  >
-                    {size}
-                  </button>
-                )
-              })}
+              {/* Size guide */}
+              {showSizeGuide && (
+                <div
+                  className="mb-4 rounded-xl overflow-hidden text-xs"
+                  style={{ border: '1px solid var(--color-border)' }}
+                >
+                  <table className="w-full text-center">
+                    <thead>
+                      <tr style={{ background: 'var(--color-brand)', color: '#fff' }}>
+                        <th className="px-3 py-2 font-semibold">Talla</th>
+                        <th className="px-3 py-2 font-semibold">Pecho (cm)</th>
+                        <th className="px-3 py-2 font-semibold">Largo (cm)</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {SIZE_GUIDE.map((row, i) => (
+                        <tr
+                          key={row.size}
+                          style={{
+                            background: i % 2 === 0 ? 'var(--color-surface)' : 'transparent',
+                            color: 'var(--color-text)',
+                          }}
+                        >
+                          <td className="px-3 py-2 font-bold">{row.size}</td>
+                          <td className="px-3 py-2">{row.chest}</td>
+                          <td className="px-3 py-2">{row.length}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+
+              <div className="flex gap-2 flex-wrap">
+                {availableSizes.map(size => {
+                  const active = selectedSize === size
+                  return (
+                    <button
+                      key={size}
+                      onClick={() => setSelectedSize(size)}
+                      className="min-w-[52px] py-2.5 text-sm font-bold rounded-xl border transition-all duration-150 hover:scale-105"
+                      style={{
+                        borderColor: active ? 'var(--color-brand)' : 'var(--color-border)',
+                        background: active ? 'var(--color-brand)' : 'var(--color-surface)',
+                        color: active ? '#fff' : 'var(--color-text)',
+                        boxShadow: active ? '0 4px 12px rgba(236,58,18,0.25)' : 'none',
+                      }}
+                    >
+                      {size}
+                    </button>
+                  )
+                })}
+              </div>
+              {!selectedSize && (
+                <p className="text-xs mt-2" style={{ color: 'var(--color-faint)' }}>
+                  Selecciona una talla para continuar
+                </p>
+              )}
             </div>
-            {!selectedSize && (
-              <p className="text-xs mt-2" style={{ color: 'var(--color-faint)' }}>
-                Selecciona una talla para continuar
-              </p>
-            )}
-          </div>
+          )}
 
           {/* Divider */}
           <div style={{ borderTop: '1px solid var(--color-border)', margin: '1.5rem 0' }} />

@@ -42,11 +42,14 @@ export function NavBar({ items, className, dark = false }: NavBarProps) {
   return (
     <div
       className={cn(
-        'fixed bottom-0 sm:top-0 left-1/2 -translate-x-1/2 z-50 mb-4 sm:mb-0 sm:pt-4',
+        // On mobile: fixed at bottom. On desktop (sm:): fixed at top, cancel the bottom-0.
+        // CRITICAL: pointer-events-none on outer so the transparent area never blocks page clicks.
+        'fixed bottom-0 sm:top-0 sm:bottom-auto left-1/2 -translate-x-1/2 z-50 mb-4 sm:mb-0 sm:pt-4 pointer-events-none',
         className,
       )}
     >
-      <div className="mk-tube-pill flex items-center gap-0.5 sm:gap-1 py-1 px-1 rounded-full">
+      {/* pointer-events-auto only on the actual pill so links work */}
+      <div className="mk-tube-pill flex items-center gap-0.5 sm:gap-1 py-1 px-1 rounded-full pointer-events-auto">
         {items.map((item) => {
           const Icon = item.icon
           const isActive = activeTab === item.name
